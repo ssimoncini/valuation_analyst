@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L'IA che Lavora — Architettura, Dominio, Strategia</title>
+<style>:root {
+  --bg: #0f172a;
+  --bg-slide: #1e293b;
+  --text: #e2e8f0;
+  --accent: #38bdf8;
+  --accent2: #818cf8;
+  --muted: #94a3b8;
+  --border: #334155;
+  --highlight: #fbbf24;
+  --green: #4ade80;
+  --red: #f87171;
+  --surface: #283548;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding: 2rem 1rem;
+}
+.container { max-width: 960px; margin: 0 auto; }
+.cover {
+  text-align: center;
+  padding: 4rem 2rem;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+.cover h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: .5rem;
+}
+.cover .meta { color: var(--muted); font-size: .95rem; margin-top: 1rem; }
+.slide {
+  background: var(--bg-slide);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem 3rem;
+  margin-bottom: 2rem;
+  page-break-inside: avoid;
+  position: relative;
+}
+.slide::before {
+  content: attr(data-num);
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: .8rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+.section-divider {
+  text-align: center;
+  padding: 2rem;
+  margin: 2.5rem 0;
+  font-size: 1rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  border-top: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+}
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: .25rem;
+}
+h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+}
+h4 {
+  font-size: 1rem;
+  color: var(--accent2);
+  margin-bottom: 1rem;
+}
+p { margin-bottom: .8rem; }
+strong { color: #f1f5f9; }
+em { color: var(--highlight); font-style: italic; }
+ul, ol { margin: .5rem 0 1rem 1.5rem; }
+li { margin-bottom: .3rem; }
+li strong { color: var(--accent); }
+blockquote {
+  border-left: 3px solid var(--accent2);
+  padding: .8rem 1.2rem;
+  margin: 1rem 0;
+  background: var(--surface);
+  border-radius: 0 8px 8px 0;
+  color: var(--muted);
+  font-style: italic;
+}
+blockquote strong { color: var(--text); }
+pre {
+  background: #0d1117;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+  font-size: .85rem;
+  line-height: 1.5;
+}
+code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: .85em;
+}
+p code, li code {
+  background: var(--surface);
+  padding: .15em .4em;
+  border-radius: 4px;
+  font-size: .85em;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: .9rem;
+}
+th {
+  background: var(--surface);
+  color: var(--accent);
+  font-weight: 600;
+  text-align: left;
+  padding: .6rem .8rem;
+  border-bottom: 2px solid var(--accent);
+}
+td {
+  padding: .5rem .8rem;
+  border-bottom: 1px solid var(--border);
+}
+tr:hover td { background: rgba(56,189,248,.04); }
+.speaker-notes {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  margin-top: 1.2rem;
+  font-size: .85rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.speaker-notes::before {
+  content: 'NOTE SPEAKER';
+  display: block;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--accent2);
+  margin-bottom: .5rem;
+}
+.key-phrase {
+  background: linear-gradient(135deg, rgba(251,191,36,.08), rgba(129,140,248,.08));
+  border-left: 3px solid var(--highlight);
+  padding: .8rem 1.2rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--highlight);
+  font-size: 1.05rem;
+}
+hr { display: none; }
+.toc {
+  background: var(--bg-slide);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+.toc h2 { margin-bottom: 1rem; }
+.toc ol { counter-reset: toc; list-style: none; margin-left: 0; }
+.toc li {
+  counter-increment: toc;
+  padding: .4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.toc li::before {
+  content: counter(toc, decimal-leading-zero);
+  color: var(--accent);
+  font-weight: 700;
+  margin-right: .8rem;
+  font-size: .85rem;
+}
+.toc a { color: var(--text); text-decoration: none; }
+.toc a:hover { color: var(--accent); }
+@media print {
+  body { background: #fff; color: #1a1a1a; padding: 0; }
+  .slide { border: 1px solid #ddd; page-break-after: always; }
+  .speaker-notes { display: none; }
+  pre { background: #f5f5f5; border-color: #ddd; }
+  h2 { color: #2563eb; }
+  .key-phrase { color: #92400e; border-color: #d97706; }
+  .cover h1 { background: none; -webkit-text-fill-color: #2563eb; color: #2563eb; }
+}
+@media (max-width: 640px) {
+  .slide { padding: 1.5rem; }
+  .cover h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.2rem; }
+  table { font-size: .8rem; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="toc">
+<h2>Indice</h2>
+<ol><li>Titolo</li><li>Il Problema — Il 90% usa l'IA come motore di ricerca</li><li>Collaboratore Creativo — Non un programma, un collega</li><li>I Tre Pilastri — Architettura, Dominio, Strategia</li><li>Un Tool Non Scala — La scala della maturita'</li><li>Sistema Multi-Agente — 24 agenti, 76 skill</li><li>Skill Come Contratti — Workflow con garanzie</li><li>Autonomia Controllata — Decision gate</li><li>Il Brillante Incompetente — Senza dominio, errori critici</li><li>Il Dominio Si Codifica — Paper, formule, vincoli, errori</li><li>Tre Livelli di Conoscenza — Dati, Metodo, Giudizio</li><li>Compliance Come Dominio — 8 ambiti normativi</li><li>Non Serve un Big Bang — Adozione progressiva</li><li>L'Uomo nel Loop — Matrice rischio/reversibilita'</li><li>Misurare il Valore — Metriche che contano</li><li>Recap — I tre cardini</li><li>Call to Action — 3 azioni per lunedi'</li><li>Stack Tecnologico — Backup</li><li>Pipeline Credit Risk — Backup</li><li>ROI dell'Approccio — Backup</li></ol>
+</div>
+<div class="cover"><h1>L'IA che Lavora: Architettura, Dominio, Strategia — Come Trasformare un Chatbot in un Collega</h1>
+<p><strong>Durata</strong>: 25 minuti
+<strong>Formato</strong>: 16 slide + eventuali backup
+<strong>Caso reale</strong>: Valuation Analyst — sistema multi-agente per valutazione aziendale e credit risk</p>
+</div><div class="slide" data-num="01">
+<h2>Slide 1 — Titolo</h2>
+<h3>L'IA che Lavora</h3>
+<h4>Architettura, Dominio, Strategia — Come Trasformare un Chatbot in un Collega</h4>
+<p>[Nome relatore]
+[Data, evento]</p>
+<p><div class="speaker-notes">
+Presentarsi in 15 secondi. Non partire dalla tecnologia, partire dal problema.
+&quot;Oggi non parliamo di cosa l'IA puo' fare in teoria. Parliamo di cosa serve
+perche' faccia davvero qualcosa di utile in pratica.&quot;</p>
+</div>
+</div><div class="slide" data-num="02">
+<h2>Slide 2 — Il Problema</h2>
+<h3>Il 90% delle aziende usa l'IA come un motore di ricerca glorificato</h3>
+<p><strong>Visual:</strong> Piramide a 4 livelli con percentuali di adozione:</p>
+<pre><code>                    /\
+                   /  \        5% — Sistema produttivo
+                  /----\
+                 /      \     10% — Automazione task
+                /--------\
+               /          \   25% — Assistente ad hoc
+              /------------\
+             /              \  60% — Chatbot / Q&amp;A
+            /________________\
+</code></pre>
+<p><strong>Bullet points:</strong></p>
+<ul>
+<li>La maggior parte delle implementazioni si ferma a &quot;chiedere cose all'IA&quot;</li>
+<li>Il risultato: output non riproducibili, non verificabili, non integrabili</li>
+<li>Il vero gap non e' tecnologico — e' architetturale e culturale</li>
+<li><strong>Domanda chiave:</strong> cos'e' che separa il 5% in cima dal resto?</li>
+</ul>
+<p>
+<em>&quot;Il problema non e' che l'IA non funziona. E' che la usiamo come se fosse
+Google con le buone maniere.&quot;</em></p>
+<p><div class="speaker-notes">
+Qui il pubblico deve riconoscersi. La maggior parte delle aziende ha comprato
+licenze, fatto workshop, e poi l'utilizzo si e' stabilizzato su &quot;chiedo cose
+alla chat&quot;. Non e' colpa loro — manca il framework per fare di piu'.
+Anticipare: &quot;Oggi vi mostro i tre ingredienti che servono per salire
+in cima a quella piramide. Con un caso reale.&quot;</p>
+</div>
+</div><div class="slide" data-num="03">
+<h2>Slide 3 — L'IA e' un Collaboratore Creativo</h2>
+<h3>Non e' un programma che fa i conti. E' un collega che ragiona.</h3>
+<p><strong>Visual:</strong> Tabella a due colonne, contrasto netto:</p>
+<p>| Calcolatrice | Collaboratore creativo |</p>
+<table>
+<thead>
+<tr>
+<th>(quello che gia' avete)</th>
+<th>(quello che cambia tutto)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Esegue una formula</td>
+<td>Sceglie quale formula usare e perche'</td>
+</tr>
+<tr>
+<td>Produce un numero</td>
+<td>Chiede &quot;questo numero ha senso?&quot;</td>
+</tr>
+<tr>
+<td>Fa quello che gli dici</td>
+<td>Propone quello che non avevi considerato</td>
+</tr>
+<tr>
+<td>Si ferma davanti a un errore</td>
+<td>Spiega perche' e' un errore e suggerisce</td>
+</tr>
+<tr>
+<td>Scala in velocita'</td>
+<td>Scala in giudizio</td>
+</tr>
+<tr>
+<td>Serve un programmatore per cambiarla</td>
+<td>Si adatta al contesto in linguaggio naturale</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Esempio concreto:</strong></p>
+<blockquote>
+<p>L'agente non calcola solo il Terminal Value di un'azienda.
+Verifica che sia coerente con 7 controlli indipendenti.
+Se il TV pesa piu' del 75% del valore totale, si ferma e ti avvisa.
+Se il tasso di crescita perpetua supera il PIL del paese, lo segnala.
+Poi chiede: &quot;Procedo o vuoi rivedere le assunzioni?&quot;</p>
+<p>Un programma non lo fa. Un collega si'.</p>
+</blockquote>
+<p>
+<em>&quot;Il valore dell'IA non e' fare i conti piu' in fretta. E' avere qualcuno
+che ti chiede: sei sicuro che quei conti abbiano senso?&quot;</em></p>
+<p><div class="speaker-notes">
+Questa e' la slide piu' importante della presentazione. Se il pubblico esce
+con un solo concetto, deve essere questo: l'IA non e' automazione, e'
+collaborazione creativa. Il paragone col collega funziona perche' tutti ne
+hanno avuto uno bravo — quello che ti fa la domanda giusta al momento giusto.
+L'IA puo' fare esattamente quello, ma solo se glielo insegni.
+Transizione: &quot;Ma come si costruisce un collega cosi'? Servono tre cose.&quot;</p>
+</div>
+</div><div class="slide" data-num="04">
+<h2>Slide 4 — I Tre Pilastri</h2>
+<h3>Tre ingredienti. Senza uno, il sistema non regge.</h3>
+<p><strong>Visual:</strong> Triangolo equilatero con i tre vertici:</p>
+<pre><code>              ARCHITETTURA
+                  /\
+                 /  \
+                / IA \
+               / PRO- \
+              / DUTTIVA \
+             /___________\
+    DOMINIO                STRATEGIA
+</code></pre>
+<ul>
+<li><strong>Architettura</strong> — Dal prompt singolo al sistema multi-agente</li>
+<li><strong>Dominio</strong> — La conoscenza che rende l'IA competente, non solo veloce</li>
+<li><strong>Strategia</strong> — Il percorso di adozione che rende il sistema utilizzabile</li>
+</ul>
+<p>
+<em>&quot;Un'IA senza architettura e' un giocattolo. Senza dominio e' un pericolo.
+Senza strategia e' un progetto pilota che non finisce mai.&quot;</em></p>
+<p><div class="speaker-notes">
+Slide di transizione. Dare 10 secondi al pubblico per leggere il triangolo,
+poi anticipare: &quot;Partiamo dal primo: l'architettura. Perche' e' qui che la
+maggior parte dei progetti si arena.&quot;</p>
+</div>
+</div><div class="section-divider">PILASTRO 1 — DAL TOOL ALL'ARCHITETTURA</div><div class="slide" data-num="05">
+<h2>Slide 5 — Un Tool Non Scala</h2>
+<h3>Da prompt a sistema: la scala della maturita'</h3>
+<p><strong>Visual:</strong> 4 gradini con freccia ascendente:</p>
+<pre><code>Livello 1: PROMPT SINGOLO
+  &quot;Quanto vale Apple?&quot; → risposta generica, non verificabile
+
+Livello 2: SCRIPT + IA
+  Script Python che chiama l'IA → riproducibile ma rigido
+
+Livello 3: AGENTE SPECIALIZZATO
+  Un agente con skill, strumenti e memoria → flessibile ma isolato
+
+Livello 4: SISTEMA MULTI-AGENTE
+  Orchestratore + agenti specializzati + workflow → produttivo
+</code></pre>
+<p><strong>Bullet points:</strong></p>
+<ul>
+<li>Il livello 1 e' dove il 60% si ferma</li>
+<li>Il salto critico e' da 2 a 3: l'IA smette di essere chiamata e inizia a decidere</li>
+<li>Il livello 4 e' dove l'IA diventa un sistema produttivo</li>
+</ul>
+<p>
+<em>&quot;Un tool risolve un problema. Un'architettura risolve una classe di problemi.&quot;</em></p>
+<p><div class="speaker-notes">
+Non soffermarsi troppo sui livelli bassi — il pubblico li conosce gia'.
+Concentrarsi sul salto 2→3: &quot;Un agente non e' uno script che chiama l'IA.
+E' un'IA che sa usare gli script.&quot; E sul salto 3→4: &quot;Il vero potere non e'
+nell'agente singolo, ma in come collaborano tra loro.&quot;</p>
+</div>
+</div><div class="slide" data-num="06">
+<h2>Slide 6 — Anatomia di un Sistema Multi-Agente</h2>
+<h3>24 agenti, 76 skill, un orchestratore — caso reale</h3>
+<p><strong>Visual:</strong> Diagramma hub-and-spoke:</p>
+<pre><code>                    [Orchestratore]
+                    /    |    \     \
+                   /     |     \     \
+          [DCF]  [Risk] [Comparabili] [Credit Risk]
+            |      |        |             |
+        skill 1  skill 2  skill 3     skill 4-7
+        skill 8  skill 9  skill 10    ...
+</code></pre>
+<p>Al centro: orchestratore che coordina.
+Intorno: agenti specializzati, ciascuno con le proprie skill.</p>
+<p><strong>I numeri del caso reale:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Quantita'</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agenti specializzati</td>
+<td>24</td>
+</tr>
+<tr>
+<td>Skill (workflow codificati)</td>
+<td>76</td>
+</tr>
+<tr>
+<td>Test automatizzati</td>
+<td>348</td>
+</tr>
+<tr>
+<td>Moduli Python</td>
+<td>40+</td>
+</tr>
+<tr>
+<td>Righe di codice</td>
+<td>26.000+</td>
+</tr>
+<tr>
+<td>Modalita' operative</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>
+<em>&quot;Non e' un chatbot grande. E' un team di specialisti che sa collaborare.&quot;</em></p>
+<p><div class="speaker-notes">
+Mostrare il diagramma e spiegare: &quot;Ogni agente e' uno specialista. Il DCF
+analyst sa fare solo DCF, ma lo fa con la profondita' di un analista esperto.
+L'orchestratore decide chi chiamare, in che ordine, e verifica che i risultati
+siano coerenti tra loro.&quot; Pausa. &quot;Esattamente come funziona un team vero.&quot;</p>
+</div>
+</div><div class="slide" data-num="07">
+<h2>Slide 7 — Le Skill Come Contratti</h2>
+<h3>Una skill non e' un prompt. E' un workflow con garanzie.</h3>
+<p><strong>Visual:</strong> Confronto prima/dopo:</p>
+<pre><code>PRIMA (prompt generico):              DOPO (skill strutturata):
+                                      
+&quot;Calcola il DCF di questa azienda&quot;   VINCOLI CRITICI
+                                       - FCFF si sconta al WACC, mai al Ke
+→ Output variabile                     - Terminal growth &lt;= PIL nominale
+→ Nessun controllo                     - TV non oltre 75% del valore
+→ Non riproducibile                   
+→ Nessun punto di verifica            WORKFLOW A CHECKPOINT
+                                       Step 1: Validazione dati → GATE
+40 righe                               Step 2: Calcolo FCFF → GATE
+                                       Step 3: Proiezione multi-stage → GATE
+                                       Step 4: Terminal Value + 7 check → GATE
+                                       Step 5: Enterprise → Equity → GATE
+                                      
+                                      ERRORI COMUNI
+                                       - Usare WACC per scontare FCFE
+                                       - Terminal growth &gt; PIL del paese
+                                       - Ignorare il reinvestimento stabile
+                                      
+                                      250 righe — autosufficiente
+</code></pre>
+<p>
+<em>&quot;La differenza tra un prompt e una skill e' la stessa che c'e' tra
+chiedere un'opinione e avere una procedura operativa.&quot;</em></p>
+<p><div class="speaker-notes">
+Questo e' il punto tecnico piu' importante per chi deve implementare.
+&quot;Una skill codifica non solo il COSA fare, ma il COME, il QUANDO FERMARSI,
+e il COSA PUO' ANDARE STORTO. E' la differenza tra affidare un task a uno
+stagista il primo giorno e affidarlo a un collega senior.&quot;
+Far notare: da 40 righe a 250 righe. &quot;La complessita' non e' nel calcolo —
+e' nel sapere cosa controllare.&quot;</p>
+</div>
+</div><div class="slide" data-num="08">
+<h2>Slide 8 — L'Autonomia Controllata</h2>
+<h3>&quot;L'IA migliore e' quella che sa quando fermarsi a chiedere&quot;</h3>
+<p><strong>Visual:</strong> Timeline di un workflow reale con 5 gate:</p>
+<pre><code>[Dati] ──GATE──&gt; [WACC] ──GATE──&gt; [DCF] ──GATE──&gt; [Risk] ──GATE──&gt; [Report]
+         |               |               |               |
+    &quot;Config OK.      &quot;WACC = 8.2%.   &quot;EV = 450M,     &quot;Range 380-520M.
+     Paese: IT.       Confermi?&quot;      TV peso 68%.     IC 90%.
+     Procedo?&quot;                        Coerenza: OK.    Genero report?&quot;
+                                      Procedo?&quot;
+</code></pre>
+<p><strong>Il principio:</strong></p>
+<ul>
+<li>L'IA procede autonomamente dove il rischio e' basso (calcoli, formattazione)</li>
+<li>Si ferma e chiede dove il rischio e' alto (assunzioni, parametri, giudizi)</li>
+<li>L'umano non deve controllare tutto — solo i punti che contano</li>
+</ul>
+<p><strong>Matrice decisionale:</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Reversibile</th>
+<th>Irreversibile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rischio basso</strong></td>
+<td>IA decide</td>
+<td>IA propone, umano conferma</td>
+</tr>
+<tr>
+<td><strong>Rischio alto</strong></td>
+<td>IA propone, umano conferma</td>
+<td>Umano decide, IA supporta</td>
+</tr>
+</tbody>
+</table>
+<p>
+<em>&quot;Non vogliamo un'IA che fa tutto da sola. Vogliamo un'IA che sappia
+distinguere cosa puo' fare da sola da cosa deve chiedere.&quot;</em></p>
+<p><div class="speaker-notes">
+&quot;Questo e' il motivo per cui i sistemi full-autonomous falliscono in contesti
+professionali. Il valore non e' nell'autonomia totale — e' nella capacita'
+di sapere quando il proprio output ha bisogno di validazione umana.
+I decision gate non sono un freno. Sono il motivo per cui il sistema
+e' adottabile in un contesto reale.&quot;</p>
+</div>
+</div><div class="section-divider">PILASTRO 2 — CONOSCENZA DEL DOMINIO</div><div class="slide" data-num="09">
+<h2>Slide 9 — Il Brillante Incompetente</h2>
+<h3>Senza dominio, l'IA sbaglia le cose che contano</h3>
+<p><strong>Visual:</strong> Due output a confronto — stesso prompt, risultati opposti:</p>
+<pre><code>PROMPT: &quot;Valuta il Terminal Value di questa azienda&quot;
+
+IA GENERICA:                          IA CON DOMINIO:
+TV = FCF * (1+g) / (WACC-g)          TV = NOPAT * (1 - g/ROIC) / (wacc - g)
+TV = 120 * 1.03 / (0.08-0.03)        
+TV = 2.472M                          CHECK COERENZA:
+                                      ✓ g (3%) &lt; PIL nominale Italia (1.5%) — WARNING
+&quot;Il Terminal Value e' 2.472M.&quot;        ✓ ROIC nuovi inv. (12%) &gt; WACC (8%) — OK
+                                      ✗ Peso TV su EV: 82% — ANOMALO (soglia 75%)
+                                      ✗ g &gt; PIL paese — RIVEDERE
+                                      
+                                      &quot;TV = 1.890M ma due check falliti.
+                                       Raccomando: ridurre g a 1.5%.
+                                       Procedo o rivediamo?&quot;
+</code></pre>
+<p><strong>Il punto:</strong></p>
+<ul>
+<li>Il primo output e' matematicamente corretto ma professionalmente inutile</li>
+<li>Il secondo identifica due problemi che il primo ignora completamente</li>
+<li>In finanza, un numero sbagliato presentato con sicurezza e' peggio di nessun numero</li>
+</ul>
+<p>
+<em>&quot;L'IA generica sa fare i conti. L'IA con dominio sa quando i conti non tornano.&quot;</em></p>
+<p><div class="speaker-notes">
+&quot;Questo esempio e' reale. Il 10% dei report di analisti professionisti
+contiene Terminal Value incoerenti — lo dice uno studio dell'Universita'
+di Bergamo. Se gli analisti umani sbagliano il TV, figuriamoci un'IA
+generica. La soluzione non e' un'IA piu' potente — e' un'IA che sa
+cosa controllare.&quot;</p>
+</div>
+</div><div class="slide" data-num="10">
+<h2>Slide 10 — Il Dominio Si Codifica</h2>
+<h3>Come si insegna un mestiere all'IA: paper → formule → vincoli → errori</h3>
+<p><strong>Visual:</strong> Pipeline di codifica della conoscenza:</p>
+<pre><code>PAPER ACCADEMICI              CODICE PYTHON              SKILL OPERATIVA
+                                                         
+Scarano/Brughera 2008   →    bms/builder.py        →    bms-builder/SKILL.md
+(Bilancio Medio Standard)    386 righe, 15 metodi        144 righe, 4 checkpoint
+                                                         
+Scarano/Di Napoli 2008  →    dcf/coherence.py      →    dcf-tv-coherence/SKILL.md
+(Terminal Value coerente)    428 righe, 7 check          211 righe, 5 checkpoint
+                                                         
+Montesi/Papiro 2014     →    agentic_credit_risk/  →    agentic-credit-risk/SKILL.md
+(Credit Risk Monte Carlo)   1.430 righe, 6 moduli       187 righe, 6 checkpoint
+</code></pre>
+<p><strong>I tre livelli della codifica:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Livello</th>
+<th>Cosa</th>
+<th>Esempio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Formule</strong></td>
+<td>Le equazioni del paper</td>
+<td>TV = NOPAT*(1 - g/ROIC)/(wacc - g)</td>
+</tr>
+<tr>
+<td><strong>Vincoli</strong></td>
+<td>I limiti di validita'</td>
+<td>g &lt;= PIL nominale, h_T in [0,1]</td>
+</tr>
+<tr>
+<td><strong>Errori comuni</strong></td>
+<td>Cosa NON fare</td>
+<td>Mai mescolare pre-tax e after-tax WACC</td>
+</tr>
+</tbody>
+</table>
+<p>
+<em>&quot;Il dominio non si spera — si codifica. Ogni paper, ogni best practice,
+ogni errore che avete visto fare diventa una regola che l'IA applica sempre.&quot;</em></p>
+<p><div class="speaker-notes">
+&quot;Abbiamo preso tre paper accademici — pubblicati, peer-reviewed, con formule
+precise — e li abbiamo tradotti in codice e skill. Non e' stato un lavoro
+di programmazione. E' stato un lavoro di ingegneria della conoscenza.
+La parte difficile non e' implementare la formula — e' capire quando
+la formula non si applica.&quot;</p>
+</div>
+</div><div class="slide" data-num="11">
+<h2>Slide 11 — Tre Livelli di Conoscenza</h2>
+<h3>Dati, Metodo, Giudizio — solo il terzo fa la differenza</h3>
+<p><strong>Visual:</strong> Piramide a 3 livelli con esempi:</p>
+<pre><code>                    /\
+                   /  \         GIUDIZIO
+                  / 3  \        &quot;Il campione di 12 aziende e' troppo piccolo
+                 /______\        per un BMS affidabile — servono almeno 20&quot;
+                /        \      
+               /    2     \     METODO
+              /____________\    &quot;Uso il DCF a 2 stadi con formula di Gordon
+             /              \    e reinvestimento coerente g = ROIC * h&quot;
+            /       1        \  
+           /__________________\ DATI
+                                &quot;Il fatturato e' 45M, l'EBITDA margin e' 14%,
+                                 il debito/equity e' 1.2x&quot;
+</code></pre>
+<p><strong>Il punto critico:</strong></p>
+<ul>
+<li>I <strong>dati</strong> li hanno tutti (bilanci, API, database)</li>
+<li>Il <strong>metodo</strong> lo conoscono in molti (DCF, multipli, Monte Carlo)</li>
+<li>Il <strong>giudizio</strong> lo hanno i senior — ed e' quello che distingue un output utile da uno pericoloso</li>
+</ul>
+<p><strong>Esempi di giudizio codificato:</strong></p>
+<ul>
+<li>&quot;Se il target ha leva superiore al settore, la PD sara' elevata per ragioni strutturali — non e' un errore del modello&quot;</li>
+<li>&quot;Un anno buono del target vs BMS medio puo' essere temporaneo — contestualizzare con la ciclicita'&quot;</li>
+<li>&quot;Se DCF e multipli divergono piu' del 30%: investigare, non mediare ciecamente&quot;</li>
+</ul>
+<p>
+<em>&quot;Tutti possono dare dati all'IA. I migliori le insegnano il giudizio.&quot;</em></p>
+<p><div class="speaker-notes">
+&quot;Il livello 1 e' commodity — lo compri. Il livello 2 e' nei libri di testo.
+Il livello 3 e' nella testa dei vostri senior, e normalmente ci vogliono
+5-10 anni per trasmetterlo ai junior. Quando lo codificate in una skill,
+quel giudizio diventa disponibile dal primo giorno.&quot;</p>
+</div>
+</div><div class="slide" data-num="12">
+<h2>Slide 12 — La Compliance Come Dominio</h2>
+<h3>Non e' un vincolo. E' un vantaggio competitivo.</h3>
+<p><strong>Visual:</strong> Tabella degli 8 ambiti normativi codificati:</p>
+<table>
+<thead>
+<tr>
+<th>Ambito</th>
+<th>Normativa</th>
+<th>Cosa fa l'IA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Antitrust</td>
+<td>AGCM</td>
+<td>Verifica soglie fatturato (532M/32M EUR)</td>
+</tr>
+<tr>
+<td>Settori strategici</td>
+<td>Golden Power</td>
+<td>Flag settori D.L. 21/2012</td>
+</tr>
+<tr>
+<td>Mercati</td>
+<td>CONSOB</td>
+<td>Conformita' Regolamento Emittenti</td>
+</tr>
+<tr>
+<td>Adeguatezza</td>
+<td>MiFID II</td>
+<td>Profiling, target market, ESG</td>
+</tr>
+<tr>
+<td>Antiriciclaggio</td>
+<td>D.Lgs. 231/2007</td>
+<td>3 livelli adeguata verifica</td>
+</tr>
+<tr>
+<td>Sostenibilita'</td>
+<td>SFDR</td>
+<td>Classificazione art. 6/8/9</td>
+</tr>
+<tr>
+<td>Resilienza</td>
+<td>DORA</td>
+<td>Check Reg. UE 2022/2554</td>
+</tr>
+<tr>
+<td>Fiscalita'</td>
+<td>IRES+IRAP, PEX, ROL</td>
+<td>Parametri automatici per Italia</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Il punto:</strong></p>
+<ul>
+<li>Un output non compliant e' un output inutilizzabile</li>
+<li>La compliance codificata non rallenta — accelera (niente rework)</li>
+<li>L'IA che conosce le regole produce output direttamente utilizzabili dal business</li>
+</ul>
+<p>
+<em>&quot;L'IA che non conosce le regole vi fa lavorare due volte.
+Una per generare l'output, una per renderlo compliant.&quot;</em></p>
+<p><div class="speaker-notes">
+&quot;Questo e' un tema che i tecnici sottovalutano e i business capiscono
+immediatamente. In Italia abbiamo un quadro normativo complesso — MiFID II,
+Golden Power, 231/2007, SFDR, DORA. Se l'IA non le conosce, ogni suo output
+deve essere rivisto da un compliance officer. Se le conosce, l'output esce
+gia' utilizzabile. La compliance non e' il freno dell'innovazione —
+e' il prerequisito per l'adozione.&quot;</p>
+</div>
+</div><div class="section-divider">PILASTRO 3 — STRATEGIA DI ADOZIONE</div><div class="slide" data-num="13">
+<h2>Slide 13 — Non Serve un Big Bang</h2>
+<h3>Tre modalita' coesistenti — adozione progressiva, non sostitutiva</h3>
+<p><strong>Visual:</strong> Tre binari paralleli che convergono:</p>
+<pre><code>MODALITA' 1: Damodaran (Python)          Per chi gia' usa Python
+  Config JSON → Script → Report PDF       Output: report automatico
+  Target: societa' quotate                Curva: bassa — lancia e ottieni
+                                          
+MODALITA' 2: FSI Excel (interattivo)     Per chi vive in Excel
+  Claude guida → Review a ogni step       Output: workbook con formule vive
+  Target: societa' italiane quotate       Curva: media — step-by-step
+                                          
+MODALITA' 3: Rating &amp; Valuation (PMI)    Per analisti credit risk
+  BMS → DCF → Monte Carlo → Rating       Output: PD, rating, report
+  Target: PMI non quotate                 Curva: alta — pipeline completa
+</code></pre>
+<p><strong>Il principio:</strong></p>
+<ul>
+<li>Non stai sostituendo nulla — stai aggiungendo un canale</li>
+<li>Ogni modalita' si rivolge a un utente diverso con un livello di confidenza diverso</li>
+<li>L'adozione e' un percorso: parti da dove hai meno resistenza</li>
+</ul>
+<p><strong>Percorso tipico:</strong></p>
+<pre><code>Mese 1-2: Modalita' 1        Mese 3-4: Modalita' 2        Mese 5+: Modalita' 3
+&quot;L'IA genera report&quot;     →   &quot;L'IA costruisce modelli&quot;  →  &quot;L'IA stima il rischio&quot;
+Basso rischio, alta         Medio rischio, feedback        Alto valore, massima
+visibilita' dei risultati   continuo dell'utente           integrazione nel processo
+</code></pre>
+<p>
+<em>&quot;L'errore piu' comune e' voler fare tutto subito. Il percorso giusto
+e' partire da dove il valore e' visibile e il rischio e' basso.&quot;</em></p>
+<p><div class="speaker-notes">
+&quot;Non chiedete alle persone di cambiare il modo in cui lavorano dal giorno 1.
+Date loro un canale nuovo accanto a quello vecchio. Quando vedono che
+il nuovo funziona, saranno loro a chiedere di piu'.
+Nel nostro caso: il report automatico e' stato il cavallo di Troia.
+Nessuno si sentiva minacciato da un PDF generato. Ma dopo averlo visto,
+tutti volevano il modello Excel interattivo. E dopo l'Excel, il credit risk.&quot;</p>
+</div>
+</div><div class="slide" data-num="14">
+<h2>Slide 14 — L'Uomo nel Loop</h2>
+<h3>Dove mettere l'umano — e dove toglierlo</h3>
+<p><strong>Visual:</strong> Matrice 2x2:</p>
+<pre><code>                   REVERSIBILE              IRREVERSIBILE
+                
+RISCHIO        ┌─────────────────────┬──────────────────────┐
+BASSO          │                     │                      │
+               │  IA DECIDE          │  IA PROPONE          │
+               │                     │  UMANO CONFERMA      │
+               │  Calcoli, format,   │                      │
+               │  data retrieval,    │  Scelta comparabili, │
+               │  report draft       │  pubblicazione       │
+               │                     │  report              │
+               ├─────────────────────┼──────────────────────┤
+RISCHIO        │                     │                      │
+ALTO           │  IA PROPONE         │  UMANO DECIDE        │
+               │  UMANO CONFERMA     │  IA SUPPORTA         │
+               │                     │                      │
+               │  Assunzioni DCF,    │  Raccomandazione      │
+               │  parametri WACC,    │  BUY/SELL,           │
+               │  scelta modello     │  rating creditizio   │
+               │                     │                      │
+               └─────────────────────┴──────────────────────┘
+</code></pre>
+<p><strong>Il principio:</strong></p>
+<ul>
+<li>Non tutto richiede supervisione umana — e' inefficiente</li>
+<li>Non tutto puo' essere delegato — e' irresponsabile</li>
+<li>La chiave e' sapere dove tracciare il confine</li>
+</ul>
+<p><strong>Nel sistema reale:</strong></p>
+<ul>
+<li><strong>IA decide:</strong> fetch dati, calcoli, formattazione, generazione tabelle</li>
+<li><strong>IA propone + gate:</strong> WACC calcolato, valore DCF, composizione campione</li>
+<li><strong>Umano decide:</strong> tasso di crescita terminale, peso dei metodi, raccomandazione finale</li>
+</ul>
+<p>
+<em>&quot;Non 'IA o umano'. Ma 'IA dove aggiunge velocita', umano dove aggiunge giudizio'.&quot;</em></p>
+<p><div class="speaker-notes">
+&quot;Questa matrice e' lo strumento piu' pratico che vi lascio oggi.
+Prendetela e applicatela al vostro contesto: per ogni task che fate,
+chiedetevi — e' reversibile? E' ad alto rischio? La risposta vi dice
+se l'IA puo' procedere da sola o deve fermarsi a chiedere.
+Nel nostro sistema, i decision gate sono posizionati esattamente
+secondo questa logica.&quot;</p>
+</div>
+</div><div class="slide" data-num="15">
+<h2>Slide 15 — Misurare il Valore</h2>
+<h3>Non &quot;quanti prompt al giorno&quot; — metriche che contano</h3>
+<p><strong>Visual:</strong> Due colonne — metriche sbagliate vs metriche giuste:</p>
+<table>
+<thead>
+<tr>
+<th>Metriche vanity (inutili)</th>
+<th>Metriche di valore (utili)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Numero di prompt al giorno</td>
+<td>Tempo da richiesta a output utilizzabile</td>
+</tr>
+<tr>
+<td>Token consumati</td>
+<td>Tasso di rework (output accettati al primo giro)</td>
+</tr>
+<tr>
+<td>Utenti attivi</td>
+<td>Copertura dei controlli (check eseguiti vs saltati)</td>
+</tr>
+<tr>
+<td>&quot;Soddisfazione&quot; generica</td>
+<td>Riproducibilita' (stesso input = stesso output)</td>
+</tr>
+<tr>
+<td>Costo per query</td>
+<td>Audit trail (tracciabilita' delle decisioni)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>I numeri del caso reale:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metrica</th>
+<th>Valore</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Righe di codice verificato</td>
+<td>26.284</td>
+</tr>
+<tr>
+<td>Test automatizzati</td>
+<td>348 (tutti verdi)</td>
+</tr>
+<tr>
+<td>Checkpoint per workflow</td>
+<td>4-6 per skill</td>
+</tr>
+<tr>
+<td>Modalita' operative</td>
+<td>3 (pubblici diversi)</td>
+</tr>
+<tr>
+<td>Errori comuni codificati</td>
+<td>50+ (non ripetibili)</td>
+</tr>
+<tr>
+<td>Da idea a sistema produttivo</td>
+<td>3 sessioni di lavoro</td>
+</tr>
+</tbody>
+</table>
+<p>
+<em>&quot;Se la vostra metrica principale e' 'quanti prompt facciamo', state misurando
+l'attivita', non il valore. Misurate gli output utilizzabili.&quot;</em></p>
+<p><div class="speaker-notes">
+&quot;Le metriche di adozione tradizionali — utenti attivi, prompt al giorno —
+misurano se le persone usano l'IA. Non misurano se l'IA produce valore.
+Il vero indicatore e': quanti output dell'IA finiscono nel processo
+produttivo senza rework? Se la risposta e' 'pochi', il problema non
+e' l'IA — e' l'architettura, il dominio o la strategia. Cioe' i tre
+pilastri di oggi.&quot;</p>
+</div>
+</div><div class="section-divider">CHIUSURA</div><div class="slide" data-num="16">
+<h2>Slide 16 — I Tre Cardini — Recap</h2>
+<h3>Senza uno dei tre, il sistema non regge</h3>
+<p><strong>Visual:</strong> Triangolo con conseguenze della mancanza:</p>
+<pre><code>              ARCHITETTURA
+                  /\
+                 /  \
+                / IA \
+               / PRO- \
+              / DUTTIVA \
+             /___________\
+    DOMINIO                STRATEGIA
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Se manca...</th>
+<th>Risultato</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Architettura</td>
+<td>IA brillante ma caotica — output non riproducibili, non integrabili</td>
+</tr>
+<tr>
+<td>Dominio</td>
+<td>IA veloce ma pericolosa — numeri sbagliati presentati con sicurezza</td>
+</tr>
+<tr>
+<td>Strategia</td>
+<td>IA potente ma inutilizzata — progetto pilota che non finisce mai</td>
+</tr>
+</tbody>
+</table>
+<p><strong>I tre punti da portare a casa:</strong></p>
+<ol>
+<li>
+<p><strong>Architettura</strong>: non un prompt, un sistema. Agenti specializzati,
+skill con garanzie, autonomia controllata con decision gate.</p>
+</li>
+<li>
+<p><strong>Dominio</strong>: non dati, giudizio. Paper, formule, vincoli, errori comuni
+codificati — l'IA sa cosa controllare, non solo cosa calcolare.</p>
+</li>
+<li>
+<p><strong>Strategia</strong>: non big bang, percorso. Partire da dove il rischio e' basso
+e il valore e' visibile, espandere quando la fiducia cresce.</p>
+</li>
+</ol>
+<p>
+<em>&quot;L'IA che lavora non e' quella piu' potente. E' quella meglio orchestrata,
+piu' competente nel dominio, e adottata con il percorso giusto.&quot;</em></p>
+<p><div class="speaker-notes">
+&quot;Questi tre pilastri non sono teoria. Sono il risultato di un progetto reale
+che oggi ha 24 agenti, 76 skill, 348 test e tre modalita' operative.
+Non e' un prototipo — e' un sistema che produce output utilizzabili.
+E la cosa piu' importante: non e' partito cosi'. E' partito da un prompt.
+Il percorso da prompt a sistema produttivo e' esattamente quello che
+vi ho raccontato oggi.&quot;</p>
+</div>
+</div><div class="slide" data-num="17">
+<h2>Slide 17 — Call to Action</h2>
+<h3>Smettete di chiedere all'IA di fare cose. Iniziate a costruire sistemi che sanno farle.</h3>
+<p><strong>Tre azioni concrete per lunedi' mattina:</strong></p>
+<ol>
+<li>
+<p><strong>Prendete un workflow ripetitivo</strong> del vostro team e scrivetelo come skill:
+vincoli, step, checkpoint, errori comuni. Non serve codice — basta un documento.</p>
+</li>
+<li>
+<p><strong>Identificate i vostri decision gate</strong>: dove l'IA puo' procedere da sola
+e dove deve fermarsi. Usate la matrice rischio/reversibilita'.</p>
+</li>
+<li>
+<p><strong>Partite piccoli</strong>: un agente, una skill, un workflow. Poi misurate
+gli output utilizzabili, non i prompt. Se funziona, espandete.</p>
+</li>
+</ol>
+<p><strong>Contatti:</strong>
+[Nome] — [Email] — [LinkedIn]</p>
+<p>
+<em>&quot;Il futuro non e' l'IA che sostituisce le persone. E' l'IA che rende
+le persone piu' brave nel loro mestiere.&quot;</em></p>
+<p><div class="speaker-notes">
+&quot;Le tre azioni sono volutamente semplici. Non servono budget, non servono
+approvazioni, non serve un team di data scientist. Servono 30 minuti
+per scrivere un workflow come skill, 15 minuti per mappare i decision gate,
+e la volonta' di misurare l'output, non l'attivita'. Grazie.&quot;</p>
+</div>
+</div><div class="section-divider">SLIDE BACKUP (se ci sono domande)</div><div class="slide" data-num="18">
+<h2>Backup 1 — Stack Tecnologico</h2>
+<h3>Cosa c'e' sotto il cofano</h3>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Tecnologia</th>
+<th>Ruolo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM</td>
+<td>Claude (Anthropic)</td>
+<td>Ragionamento, generazione, orchestrazione</td>
+</tr>
+<tr>
+<td>Runtime</td>
+<td>Claude Code (CLI)</td>
+<td>Esecuzione agenti, tool use, file system</td>
+</tr>
+<tr>
+<td>Linguaggio</td>
+<td>Python 3.11+</td>
+<td>Calcoli, modelli, test</td>
+</tr>
+<tr>
+<td>Skill layer</td>
+<td>Markdown strutturato</td>
+<td>Workflow, vincoli, checkpoint</td>
+</tr>
+<tr>
+<td>Dati mercato</td>
+<td>Massive.com API</td>
+<td>Prezzi, bilanci, fondamentali</td>
+</tr>
+<tr>
+<td>Dati settoriali</td>
+<td>Damodaran NYU + CSV</td>
+<td>Parametri settoriali, master scale</td>
+</tr>
+<tr>
+<td>Test</td>
+<td>pytest (348 test)</td>
+<td>Garanzia di correttezza</td>
+</tr>
+<tr>
+<td>Versionamento</td>
+<td>Git + GitHub</td>
+<td>Audit trail, collaborazione</td>
+</tr>
+</tbody>
+</table>
+<p><div class="speaker-notes">
+&quot;La scelta tecnologica piu' importante non e' il modello LLM. E' il layer
+di skill — quei file markdown che codificano il dominio. Se domani
+cambiassimo modello, le skill restano. Il dominio e' l'asset.&quot;</p>
+</div>
+</div><div class="slide" data-num="19">
+<h2>Backup 2 — Esempio Live: Pipeline Credit Risk</h2>
+<h3>Dal bilancio al rating in 5 step</h3>
+<pre><code>STEP 1: Dataset            STEP 2: BMS settoriale
+CSV con 48 aziende    →    Media standardizzata di 35 peer
+Invarianti verificati       EBITDA margin 14%, leva D/TA 42%
+                            GATE: &quot;BMS costruito. Procedo?&quot;
+
+STEP 3: Differenziale      STEP 4: DCF coerente
+Target vs settore      →    2 stadi, TV con reinvestimento
+Margine +3pp, leva -5pp    7 check coerenza: tutti PASS
+GATE: &quot;6/8 favorevoli&quot;     GATE: &quot;EV = 38M. TV peso 64%&quot;
+
+STEP 5: Monte Carlo         RISULTATO
+20.000 simulazioni     →    PD 3 anni: 2.8%
+Weibull + copula            Rating implicito: BB+
+Debito endogeno             EL = 1.2M, UL 95% = 3.8M
+                            GATE: &quot;Genero report?&quot;
+</code></pre>
+<p><div class="speaker-notes">
+&quot;Questa pipeline non esisteva come prodotto. E' stata costruita traducendo
+tre paper accademici in codice e skill. Il tempo totale: tre sessioni
+di lavoro collaborativo con l'IA. Non tre mesi — tre sessioni.&quot;</p>
+</div>
+</div><div class="slide" data-num="20">
+<h2>Backup 3 — ROI dell'Approccio</h2>
+<h3>Investimento vs ritorno</h3>
+<table>
+<thead>
+<tr>
+<th>Investimento</th>
+<th>Tempo</th>
+<th>Una tantum?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Codifica dominio (paper → skill)</td>
+<td>2-3 giorni per verticale</td>
+<td>Si'</td>
+</tr>
+<tr>
+<td>Architettura agenti</td>
+<td>1-2 giorni setup</td>
+<td>Si'</td>
+</tr>
+<tr>
+<td>Test e validazione</td>
+<td>1 giorno</td>
+<td>Si'</td>
+</tr>
+<tr>
+<td><strong>Totale setup</strong></td>
+<td><strong>~1 settimana</strong></td>
+<td><strong>Si'</strong></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Ritorno</th>
+<th>Per singola analisi</th>
+<th>Cumulativo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tempo analisi: da 2-3 giorni a 2-3 ore</td>
+<td>-80%</td>
+<td>Cresce con volume</td>
+</tr>
+<tr>
+<td>Controlli: da manuali a automatici</td>
+<td>7+ check sempre eseguiti</td>
+<td>Zero dimenticanze</td>
+</tr>
+<tr>
+<td>Riproducibilita': da variabile a garantita</td>
+<td>Stesso input = stesso output</td>
+<td>Audit-friendly</td>
+</tr>
+<tr>
+<td>Onboarding junior: da mesi a giorni</td>
+<td>Skill = formazione codificata</td>
+<td>Scala con il team</td>
+</tr>
+</tbody>
+</table>
+<p><div class="speaker-notes">
+&quot;Il setup e' un investimento una tantum. Il ritorno e' per ogni analisi
+successiva. E il ritorno nascosto piu' grande e' l'onboarding: quando
+un junior nuovo arriva, non deve imparare dal senior in 6 mesi.
+Le skill SONO la formazione.&quot;</p>
+</div>
+</div>
+</div>
+</body>
+</html>
