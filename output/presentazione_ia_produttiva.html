@@ -221,11 +221,11 @@ hr { display: none; }
 <div class="container">
 <div class="toc">
 <h2>Indice</h2>
-<ol><li>Titolo</li><li>Il Problema — Il 90% usa l'IA come motore di ricerca</li><li>Collaboratore Creativo — Non un programma, un collega</li><li>I Tre Pilastri — Architettura, Dominio, Strategia</li><li>Un Tool Non Scala — La scala della maturita'</li><li>Sistema Multi-Agente — 24 agenti, 76 skill</li><li>Skill Come Contratti — Workflow con garanzie</li><li>Autonomia Controllata — Decision gate</li><li>Il Brillante Incompetente — Senza dominio, errori critici</li><li>Il Dominio Si Codifica — Paper, formule, vincoli, errori</li><li>Tre Livelli di Conoscenza — Dati, Metodo, Giudizio</li><li>Compliance Come Dominio — 8 ambiti normativi</li><li>Non Serve un Big Bang — Adozione progressiva</li><li>L'Uomo nel Loop — Matrice rischio/reversibilita'</li><li>Misurare il Valore — Metriche che contano</li><li>Recap — I tre cardini</li><li>Call to Action — 3 azioni per lunedi'</li><li>Stack Tecnologico — Backup</li><li>Pipeline Credit Risk — Backup</li><li>ROI dell'Approccio — Backup</li></ol>
+<ol><li>Titolo</li><li>Il Problema — Il 90% usa l'IA come motore di ricerca</li><li>Collaboratore Creativo — Non un programma, un collega</li><li>I Tre Pilastri — Architettura, Dominio, Strategia</li><li>Un Tool Non Scala — La scala della maturita'</li><li>Sistema Multi-Agente — 24 agenti, 76 skill</li><li>Skill Come Contratti — Workflow con garanzie</li><li>Autonomia Controllata — Decision gate</li><li>Stack e Fonti Dati — Cosa c'e' sotto il cofano</li><li>Il Brillante Incompetente — Senza dominio, errori critici</li><li>Il Dominio Si Codifica — Paper, codice, skill</li><li>Compliance Come Dominio — Il porting al framework UE</li><li>Arricchire il Dominio — Dallo strumento alla suite</li><li>Non Serve un Big Bang — Adozione progressiva</li><li>L'Uomo nel Loop — Matrice rischio/reversibilita'</li><li>Misurare il Valore — Metriche che contano</li><li>Recap — I tre cardini</li><li>Call to Action — 3 azioni per lunedi'</li><li>Pipeline Credit Risk — Backup</li><li>ROI dell'Approccio — Backup</li></ol>
 </div>
 <div class="cover"><h1>L'IA che Lavora: Architettura, Dominio, Strategia — Come Trasformare un Chatbot in un Collega</h1>
 <p><strong>Durata</strong>: 25 minuti
-<strong>Formato</strong>: 16 slide + eventuali backup
+<strong>Formato</strong>: 18 slide + 2 backup
 <strong>Caso reale</strong>: Valuation Analyst — sistema multi-agente per valutazione aziendale e credit risk</p>
 </div><div class="slide" data-num="01">
 <h2>Slide 1 — Titolo</h2>
@@ -526,8 +526,80 @@ di sapere quando il proprio output ha bisogno di validazione umana.
 I decision gate non sono un freno. Sono il motivo per cui il sistema
 e' adottabile in un contesto reale.&quot;</p>
 </div>
-</div><div class="section-divider">PILASTRO 2 — CONOSCENZA DEL DOMINIO</div><div class="slide" data-num="09">
-<h2>Slide 9 — Il Brillante Incompetente</h2>
+</div><div class="slide" data-num="09">
+<h2>Slide 9 — Sotto il Cofano: Stack e Fonti Dati</h2>
+<h3>Cosa rende il sistema un sistema — e da dove arrivano i dati reali</h3>
+<p><strong>Visual:</strong> Tabella dello stack tecnologico e delle fonti dati:</p>
+<table>
+<thead>
+<tr>
+<th>Livello</th>
+<th>Tecnologia / Fonte</th>
+<th>Ruolo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM</td>
+<td>Claude (Anthropic)</td>
+<td>Ragionamento, generazione, orchestrazione</td>
+</tr>
+<tr>
+<td>Runtime</td>
+<td>Claude Code · MCP</td>
+<td>Esecuzione agenti, tool use, integrazioni</td>
+</tr>
+<tr>
+<td>Calcolo</td>
+<td>Python 3.11+</td>
+<td>Modelli finanziari · 348 test automatizzati</td>
+</tr>
+<tr>
+<td>Skill layer</td>
+<td>Markdown strutturato</td>
+<td>Workflow, vincoli, checkpoint</td>
+</tr>
+<tr>
+<td>Dati di mercato</td>
+<td>Massive · FactSet · Capital IQ · Refinitiv</td>
+<td>Prezzi, fondamentali, consensus</td>
+</tr>
+<tr>
+<td>Parametri settore</td>
+<td>Damodaran NYU Stern</td>
+<td>Beta, ERP, multipli, WACC settoriali</td>
+</tr>
+<tr>
+<td>Societa' italiane</td>
+<td>Bureau van Dijk (AIDA) · CONSOB · Borsa Italiana</td>
+<td>Bilanci, dati societari, depositi</td>
+</tr>
+<tr>
+<td>Versionamento</td>
+<td>Git + GitHub</td>
+<td>Audit trail, collaborazione</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Il punto:</strong></p>
+<ul>
+<li>La scelta piu' importante non e' il modello LLM — e' il layer di skill che codifica il dominio</li>
+<li>Le fonti dati sono provider professionali, non file sparsi: mercato e fondamentali da Massive/FactSet/Capital IQ/Refinitiv, parametri di settore da Damodaran, bilanci italiani da Bureau van Dijk/CONSOB/Borsa Italiana</li>
+<li>Se domani cambiasse il modello, skill e fonti restano: il dominio e' l'asset</li>
+</ul>
+<p>
+<em>&quot;Sotto il cofano non c'e' un trucco di prompt. C'e' uno stack di runtime, skill e fonti dati reali.&quot;</em></p>
+<p><div class="speaker-notes">
+&quot;Chiudo l'architettura con cosa c'e' sotto il cofano. Il runtime e' Claude Code,
+con i suoi strumenti e i connettori MCP verso i data provider. I dati non sono
+fogli di calcolo: sono le stesse fonti che usano gli analisti — Massive, FactSet,
+Capital IQ e Refinitiv per mercato e fondamentali, Damodaran per i parametri di
+settore, Bureau van Dijk, CONSOB e Borsa Italiana per le societa' italiane. Ma
+la cosa che conta di piu' resta il layer di skill: e' li' che vive il dominio,
+ed e' indipendente dal modello sottostante.&quot;</p>
+</div>
+</div><div class="section-divider">PILASTRO 2 — CONOSCENZA DEL DOMINIO</div><div class="slide" data-num="10">
+<h2>Slide 10 — Il Brillante Incompetente</h2>
 <h3>Senza dominio, l'IA sbaglia le cose che contano</h3>
 <p><strong>Visual:</strong> Due output a confronto — stesso prompt, risultati opposti:</p>
 <pre><code>PROMPT: &quot;Valuta il Terminal Value di questa azienda&quot;
@@ -560,8 +632,8 @@ di Bergamo. Se gli analisti umani sbagliano il TV, figuriamoci un'IA
 generica. La soluzione non e' un'IA piu' potente — e' un'IA che sa
 cosa controllare.&quot;</p>
 </div>
-</div><div class="slide" data-num="10">
-<h2>Slide 10 — Il Dominio Si Codifica</h2>
+</div><div class="slide" data-num="11">
+<h2>Slide 11 — Il Dominio Si Codifica</h2>
 <h3>Come si insegna un mestiere all'IA: paper → formule → vincoli → errori</h3>
 <p><strong>Visual:</strong> Pipeline di codifica della conoscenza:</p>
 <pre><code>PAPER ACCADEMICI              CODICE PYTHON              SKILL OPERATIVA
@@ -612,46 +684,9 @@ di programmazione. E' stato un lavoro di ingegneria della conoscenza.
 La parte difficile non e' implementare la formula — e' capire quando
 la formula non si applica.&quot;</p>
 </div>
-</div><div class="slide" data-num="11">
-<h2>Slide 11 — Tre Livelli di Conoscenza</h2>
-<h3>Dati, Metodo, Giudizio — solo il terzo fa la differenza</h3>
-<p><strong>Visual:</strong> Piramide a 3 livelli con esempi:</p>
-<pre><code>                    /\
-                   /  \         GIUDIZIO
-                  / 3  \        &quot;Il campione di 12 aziende e' troppo piccolo
-                 /______\        per un BMS affidabile — servono almeno 20&quot;
-                /        \      
-               /    2     \     METODO
-              /____________\    &quot;Uso il DCF a 2 stadi con formula di Gordon
-             /              \    e reinvestimento coerente g = ROIC * h&quot;
-            /       1        \  
-           /__________________\ DATI
-                                &quot;Il fatturato e' 45M, l'EBITDA margin e' 14%,
-                                 il debito/equity e' 1.2x&quot;
-</code></pre>
-<p><strong>Il punto critico:</strong></p>
-<ul>
-<li>I <strong>dati</strong> li hanno tutti (bilanci, API, database)</li>
-<li>Il <strong>metodo</strong> lo conoscono in molti (DCF, multipli, Monte Carlo)</li>
-<li>Il <strong>giudizio</strong> lo hanno i senior — ed e' quello che distingue un output utile da uno pericoloso</li>
-</ul>
-<p><strong>Esempi di giudizio codificato:</strong></p>
-<ul>
-<li>&quot;Se il target ha leva superiore al settore, la PD sara' elevata per ragioni strutturali — non e' un errore del modello&quot;</li>
-<li>&quot;Un anno buono del target vs BMS medio puo' essere temporaneo — contestualizzare con la ciclicita'&quot;</li>
-<li>&quot;Se DCF e multipli divergono piu' del 30%: investigare, non mediare ciecamente&quot;</li>
-</ul>
-<p>
-<em>&quot;Tutti possono dare dati all'IA. I migliori le insegnano il giudizio.&quot;</em></p>
-<p><div class="speaker-notes">
-&quot;Il livello 1 e' commodity — lo compri. Il livello 2 e' nei libri di testo.
-Il livello 3 e' nella testa dei vostri senior, e normalmente ci vogliono
-5-10 anni per trasmetterlo ai junior. Quando lo codificate in una skill,
-quel giudizio diventa disponibile dal primo giorno.&quot;</p>
-</div>
 </div><div class="slide" data-num="12">
 <h2>Slide 12 — La Compliance Come Dominio</h2>
-<h3>Non e' un vincolo. E' un vantaggio competitivo.</h3>
+<h3>Il porting dei financial tool al framework regolatorio europeo</h3>
 <p><strong>Visual:</strong> Tabella degli 8 ambiti normativi codificati:</p>
 <table>
 <thead>
@@ -706,23 +741,58 @@ quel giudizio diventa disponibile dal primo giorno.&quot;</p>
 </table>
 <p><strong>Il punto:</strong></p>
 <ul>
-<li>Un output non compliant e' un output inutilizzabile</li>
-<li>La compliance codificata non rallenta — accelera (niente rework)</li>
+<li>I financial tool nascono in un contesto regolatorio diverso: il valore e' stato portarli sul quadro normativo europeo e italiano</li>
+<li>Un output non compliant e' inutilizzabile; la compliance codificata non rallenta — accelera (niente rework)</li>
 <li>L'IA che conosce le regole produce output direttamente utilizzabili dal business</li>
 </ul>
 <p>
 <em>&quot;L'IA che non conosce le regole vi fa lavorare due volte.
 Una per generare l'output, una per renderlo compliant.&quot;</em></p>
 <p><div class="speaker-notes">
-&quot;Questo e' un tema che i tecnici sottovalutano e i business capiscono
-immediatamente. In Italia abbiamo un quadro normativo complesso — MiFID II,
-Golden Power, 231/2007, SFDR, DORA. Se l'IA non le conosce, ogni suo output
-deve essere rivisto da un compliance officer. Se le conosce, l'output esce
-gia' utilizzabile. La compliance non e' il freno dell'innovazione —
-e' il prerequisito per l'adozione.&quot;</p>
+&quot;La compliance e' dominio a tutti gli effetti, ed e' la seconda tappa della storia
+del progetto: abbiamo preso i financial tool e li abbiamo portati sul framework
+regolatorio europeo e italiano — MiFID II, Golden Power, 231/2007, SFDR, DORA.
+Se l'IA non conosce queste regole, ogni suo output deve essere rivisto da un
+compliance officer. Se le conosce, l'output esce gia' utilizzabile. La compliance
+non e' il freno dell'innovazione — e' il prerequisito per l'adozione.&quot;</p>
 </div>
-</div><div class="section-divider">PILASTRO 3 — STRATEGIA DI ADOZIONE</div><div class="slide" data-num="13">
-<h2>Slide 13 — Non Serve un Big Bang</h2>
+</div><div class="slide" data-num="13">
+<h2>Slide 13 — Arricchire il Dominio</h2>
+<h3>Dallo strumento specifico alla suite integrata: tre strati che si arricchiscono</h3>
+<p><strong>Visual:</strong> Piramide dell'arricchimento del dominio (dal basso verso l'alto):</p>
+<pre><code>                    /\
+                   /  \       INTEGRAZIONE
+                  /    \      &quot;I tre progetti fusi in una suite ampliata e
+                 /______\      omogenea: modelli e regole si compongono&quot;
+                /        \
+               /FRAMEWORK \   FRAMEWORK UE
+              /    UE      \  &quot;Porting dei financial tool al quadro normativo
+             /______________\  europeo: MiFID II, Golden Power, SFDR, DORA&quot;
+            /                \
+           /    STRUMENTI     \  STRUMENTI
+          /__________________  \ &quot;Valuation Analyst (Damodaran) e Rating &amp;
+                                  Valuation: modelli per le PMI italiane&quot;
+</code></pre>
+<p><strong>I tre strati (la storia del progetto):</strong></p>
+<ul>
+<li><strong>Strumenti</strong> — due plugin Claude specifici: Valuation Analyst con metodo Damodaran e Rating &amp; Valuation con modelli su misura per la realta' italiana</li>
+<li><strong>Framework UE</strong> — il porting dei financial tool al quadro regolatorio europeo: la compliance diventa dominio</li>
+<li><strong>Integrazione</strong> — i tre progetti fusi in un'unica suite ampliata e omogenea, dove modelli e regole parlano la stessa lingua</li>
+</ul>
+<p>
+<em>&quot;Il dominio non si aggiunge tutto insieme: si arricchisce per strati.
+Ogni strato eredita e potenzia quello sotto.&quot;</em></p>
+<p><div class="speaker-notes">
+&quot;Questa e' la storia del progetto in una piramide. Siamo partiti da due strumenti
+specifici — Valuation Analyst sul metodo Damodaran e Rating &amp; Valuation per le PMI
+italiane. Poi abbiamo portato i financial tool sul framework regolatorio europeo,
+quello della slide precedente. Infine abbiamo integrato i tre progetti in una
+suite unica e omogenea. Non e' stato un big bang: ogni strato ha ereditato e
+arricchito quello sotto. E' cosi' che un dominio cresce — per strati, non per
+sostituzione.&quot;</p>
+</div>
+</div><div class="section-divider">PILASTRO 3 — STRATEGIA DI ADOZIONE</div><div class="slide" data-num="14">
+<h2>Slide 14 — Non Serve un Big Bang</h2>
 <h3>Tre modalita' coesistenti — adozione progressiva, non sostitutiva</h3>
 <p><strong>Visual:</strong> Tre binari paralleli che convergono:</p>
 <pre><code>MODALITA' 1: Damodaran (Python)          Per chi gia' usa Python
@@ -760,8 +830,8 @@ Nel nostro caso: il report automatico e' stato il cavallo di Troia.
 Nessuno si sentiva minacciato da un PDF generato. Ma dopo averlo visto,
 tutti volevano il modello Excel interattivo. E dopo l'Excel, il credit risk.&quot;</p>
 </div>
-</div><div class="slide" data-num="14">
-<h2>Slide 14 — L'Uomo nel Loop</h2>
+</div><div class="slide" data-num="15">
+<h2>Slide 15 — L'Uomo nel Loop</h2>
 <h3>Dove mettere l'umano — e dove toglierlo</h3>
 <p><strong>Visual:</strong> Matrice 2x2:</p>
 <pre><code>                   REVERSIBILE              IRREVERSIBILE
@@ -807,8 +877,8 @@ se l'IA puo' procedere da sola o deve fermarsi a chiedere.
 Nel nostro sistema, i decision gate sono posizionati esattamente
 secondo questa logica.&quot;</p>
 </div>
-</div><div class="slide" data-num="15">
-<h2>Slide 15 — Misurare il Valore</h2>
+</div><div class="slide" data-num="16">
+<h2>Slide 16 — Misurare il Valore</h2>
 <h3>Non &quot;quanti prompt al giorno&quot; — metriche che contano</h3>
 <p><strong>Visual:</strong> Due colonne — metriche sbagliate vs metriche giuste:</p>
 <table>
@@ -887,8 +957,8 @@ produttivo senza rework? Se la risposta e' 'pochi', il problema non
 e' l'IA — e' l'architettura, il dominio o la strategia. Cioe' i tre
 pilastri di oggi.&quot;</p>
 </div>
-</div><div class="section-divider">CHIUSURA</div><div class="slide" data-num="16">
-<h2>Slide 16 — I Tre Cardini — Recap</h2>
+</div><div class="section-divider">CHIUSURA</div><div class="slide" data-num="17">
+<h2>Slide 17 — I Tre Cardini — Recap</h2>
 <h3>Senza uno dei tre, il sistema non regge</h3>
 <p><strong>Visual:</strong> Triangolo con conseguenze della mancanza:</p>
 <pre><code>              ARCHITETTURA
@@ -948,8 +1018,8 @@ E la cosa piu' importante: non e' partito cosi'. E' partito da un prompt.
 Il percorso da prompt a sistema produttivo e' esattamente quello che
 vi ho raccontato oggi.&quot;</p>
 </div>
-</div><div class="slide" data-num="17">
-<h2>Slide 17 — Call to Action</h2>
+</div><div class="slide" data-num="18">
+<h2>Slide 18 — Call to Action</h2>
 <h3>Smettete di chiedere all'IA di fare cose. Iniziate a costruire sistemi che sanno farle.</h3>
 <p><strong>Tre azioni concrete per lunedi' mattina:</strong></p>
 <ol>
@@ -977,67 +1047,8 @@ approvazioni, non serve un team di data scientist. Servono 30 minuti
 per scrivere un workflow come skill, 15 minuti per mappare i decision gate,
 e la volonta' di misurare l'output, non l'attivita'. Grazie.&quot;</p>
 </div>
-</div><div class="section-divider">SLIDE BACKUP (se ci sono domande)</div><div class="slide" data-num="18">
-<h2>Backup 1 — Stack Tecnologico</h2>
-<h3>Cosa c'e' sotto il cofano</h3>
-<table>
-<thead>
-<tr>
-<th>Componente</th>
-<th>Tecnologia</th>
-<th>Ruolo</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>LLM</td>
-<td>Claude (Anthropic)</td>
-<td>Ragionamento, generazione, orchestrazione</td>
-</tr>
-<tr>
-<td>Runtime</td>
-<td>Claude Code (CLI)</td>
-<td>Esecuzione agenti, tool use, file system</td>
-</tr>
-<tr>
-<td>Linguaggio</td>
-<td>Python 3.11+</td>
-<td>Calcoli, modelli, test</td>
-</tr>
-<tr>
-<td>Skill layer</td>
-<td>Markdown strutturato</td>
-<td>Workflow, vincoli, checkpoint</td>
-</tr>
-<tr>
-<td>Dati mercato</td>
-<td>Massive.com API</td>
-<td>Prezzi, bilanci, fondamentali</td>
-</tr>
-<tr>
-<td>Dati settoriali</td>
-<td>Damodaran NYU + CSV</td>
-<td>Parametri settoriali, master scale</td>
-</tr>
-<tr>
-<td>Test</td>
-<td>pytest (348 test)</td>
-<td>Garanzia di correttezza</td>
-</tr>
-<tr>
-<td>Versionamento</td>
-<td>Git + GitHub</td>
-<td>Audit trail, collaborazione</td>
-</tr>
-</tbody>
-</table>
-<p><div class="speaker-notes">
-&quot;La scelta tecnologica piu' importante non e' il modello LLM. E' il layer
-di skill — quei file markdown che codificano il dominio. Se domani
-cambiassimo modello, le skill restano. Il dominio e' l'asset.&quot;</p>
-</div>
-</div><div class="slide" data-num="19">
-<h2>Backup 2 — Esempio Live: Pipeline Credit Risk</h2>
+</div><div class="section-divider">SLIDE BACKUP (se ci sono domande)</div><div class="slide" data-num="19">
+<h2>Backup 1 — Esempio Live: Pipeline Credit Risk</h2>
 <h3>Dal bilancio al rating in 5 step</h3>
 <pre><code>STEP 1: Dataset            STEP 2: BMS settoriale
 CSV con 48 aziende    →    Media standardizzata di 35 peer
@@ -1061,7 +1072,7 @@ tre paper accademici in codice e skill. Il tempo totale: tre sessioni
 di lavoro collaborativo con l'IA. Non tre mesi — tre sessioni.&quot;</p>
 </div>
 </div><div class="slide" data-num="20">
-<h2>Backup 3 — ROI dell'Approccio</h2>
+<h2>Backup 2 — ROI dell'Approccio</h2>
 <h3>Investimento vs ritorno</h3>
 <table>
 <thead>

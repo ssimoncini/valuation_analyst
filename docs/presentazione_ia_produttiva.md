@@ -1,7 +1,7 @@
 # L'IA che Lavora: Architettura, Dominio, Strategia — Come Trasformare un Chatbot in un Collega
 
 **Durata**: 25 minuti
-**Formato**: 16 slide + eventuali backup
+**Formato**: 18 slide + 2 backup
 **Caso reale**: Valuation Analyst — sistema multi-agente per valutazione aziendale e credit risk
 
 ---
@@ -294,11 +294,47 @@ e' adottabile in un contesto reale."
 
 ---
 
+## Slide 9 — Sotto il Cofano: Stack e Fonti Dati
+
+### Cosa rende il sistema un sistema — e da dove arrivano i dati reali
+
+**Visual:** Tabella dello stack tecnologico e delle fonti dati:
+
+| Livello | Tecnologia / Fonte | Ruolo |
+|---|---|---|
+| LLM | Claude (Anthropic) | Ragionamento, generazione, orchestrazione |
+| Runtime | Claude Code · MCP | Esecuzione agenti, tool use, integrazioni |
+| Calcolo | Python 3.11+ | Modelli finanziari · 348 test automatizzati |
+| Skill layer | Markdown strutturato | Workflow, vincoli, checkpoint |
+| Dati di mercato | Massive · FactSet · Capital IQ · Refinitiv | Prezzi, fondamentali, consensus |
+| Parametri settore | Damodaran NYU Stern | Beta, ERP, multipli, WACC settoriali |
+| Societa' italiane | Bureau van Dijk (AIDA) · CONSOB · Borsa Italiana | Bilanci, dati societari, depositi |
+| Versionamento | Git + GitHub | Audit trail, collaborazione |
+
+**Il punto:**
+- La scelta piu' importante non e' il modello LLM — e' il layer di skill che codifica il dominio
+- Le fonti dati sono provider professionali, non file sparsi: mercato e fondamentali da Massive/FactSet/Capital IQ/Refinitiv, parametri di settore da Damodaran, bilanci italiani da Bureau van Dijk/CONSOB/Borsa Italiana
+- Se domani cambiasse il modello, skill e fonti restano: il dominio e' l'asset
+
+**Frase chiave:**
+*"Sotto il cofano non c'e' un trucco di prompt. C'e' uno stack di runtime, skill e fonti dati reali."*
+
+**Note speaker:**
+"Chiudo l'architettura con cosa c'e' sotto il cofano. Il runtime e' Claude Code,
+con i suoi strumenti e i connettori MCP verso i data provider. I dati non sono
+fogli di calcolo: sono le stesse fonti che usano gli analisti — Massive, FactSet,
+Capital IQ e Refinitiv per mercato e fondamentali, Damodaran per i parametri di
+settore, Bureau van Dijk, CONSOB e Borsa Italiana per le societa' italiane. Ma
+la cosa che conta di piu' resta il layer di skill: e' li' che vive il dominio,
+ed e' indipendente dal modello sottostante."
+
+---
+
 ## PILASTRO 2 — CONOSCENZA DEL DOMINIO
 
 ---
 
-## Slide 9 — Il Brillante Incompetente
+## Slide 10 — Il Brillante Incompetente
 
 ### Senza dominio, l'IA sbaglia le cose che contano
 
@@ -338,7 +374,7 @@ cosa controllare."
 
 ---
 
-## Slide 10 — Il Dominio Si Codifica
+## Slide 11 — Il Dominio Si Codifica
 
 ### Come si insegna un mestiere all'IA: paper → formule → vincoli → errori
 
@@ -378,51 +414,9 @@ la formula non si applica."
 
 ---
 
-## Slide 11 — Tre Livelli di Conoscenza
-
-### Dati, Metodo, Giudizio — solo il terzo fa la differenza
-
-**Visual:** Piramide a 3 livelli con esempi:
-
-```
-                    /\
-                   /  \         GIUDIZIO
-                  / 3  \        "Il campione di 12 aziende e' troppo piccolo
-                 /______\        per un BMS affidabile — servono almeno 20"
-                /        \      
-               /    2     \     METODO
-              /____________\    "Uso il DCF a 2 stadi con formula di Gordon
-             /              \    e reinvestimento coerente g = ROIC * h"
-            /       1        \  
-           /__________________\ DATI
-                                "Il fatturato e' 45M, l'EBITDA margin e' 14%,
-                                 il debito/equity e' 1.2x"
-```
-
-**Il punto critico:**
-- I **dati** li hanno tutti (bilanci, API, database)
-- Il **metodo** lo conoscono in molti (DCF, multipli, Monte Carlo)
-- Il **giudizio** lo hanno i senior — ed e' quello che distingue un output utile da uno pericoloso
-
-**Esempi di giudizio codificato:**
-- "Se il target ha leva superiore al settore, la PD sara' elevata per ragioni strutturali — non e' un errore del modello"
-- "Un anno buono del target vs BMS medio puo' essere temporaneo — contestualizzare con la ciclicita'"
-- "Se DCF e multipli divergono piu' del 30%: investigare, non mediare ciecamente"
-
-**Frase chiave:**
-*"Tutti possono dare dati all'IA. I migliori le insegnano il giudizio."*
-
-**Note speaker:**
-"Il livello 1 e' commodity — lo compri. Il livello 2 e' nei libri di testo.
-Il livello 3 e' nella testa dei vostri senior, e normalmente ci vogliono
-5-10 anni per trasmetterlo ai junior. Quando lo codificate in una skill,
-quel giudizio diventa disponibile dal primo giorno."
-
----
-
 ## Slide 12 — La Compliance Come Dominio
 
-### Non e' un vincolo. E' un vantaggio competitivo.
+### Il porting dei financial tool al framework regolatorio europeo
 
 **Visual:** Tabella degli 8 ambiti normativi codificati:
 
@@ -438,8 +432,8 @@ quel giudizio diventa disponibile dal primo giorno."
 | Fiscalita' | IRES+IRAP, PEX, ROL | Parametri automatici per Italia |
 
 **Il punto:**
-- Un output non compliant e' un output inutilizzabile
-- La compliance codificata non rallenta — accelera (niente rework)
+- I financial tool nascono in un contesto regolatorio diverso: il valore e' stato portarli sul quadro normativo europeo e italiano
+- Un output non compliant e' inutilizzabile; la compliance codificata non rallenta — accelera (niente rework)
 - L'IA che conosce le regole produce output direttamente utilizzabili dal business
 
 **Frase chiave:**
@@ -447,12 +441,53 @@ quel giudizio diventa disponibile dal primo giorno."
 Una per generare l'output, una per renderlo compliant."*
 
 **Note speaker:**
-"Questo e' un tema che i tecnici sottovalutano e i business capiscono
-immediatamente. In Italia abbiamo un quadro normativo complesso — MiFID II,
-Golden Power, 231/2007, SFDR, DORA. Se l'IA non le conosce, ogni suo output
-deve essere rivisto da un compliance officer. Se le conosce, l'output esce
-gia' utilizzabile. La compliance non e' il freno dell'innovazione —
-e' il prerequisito per l'adozione."
+"La compliance e' dominio a tutti gli effetti, ed e' la seconda tappa della storia
+del progetto: abbiamo preso i financial tool e li abbiamo portati sul framework
+regolatorio europeo e italiano — MiFID II, Golden Power, 231/2007, SFDR, DORA.
+Se l'IA non conosce queste regole, ogni suo output deve essere rivisto da un
+compliance officer. Se le conosce, l'output esce gia' utilizzabile. La compliance
+non e' il freno dell'innovazione — e' il prerequisito per l'adozione."
+
+---
+
+## Slide 13 — Arricchire il Dominio
+
+### Dallo strumento specifico alla suite integrata: tre strati che si arricchiscono
+
+**Visual:** Piramide dell'arricchimento del dominio (dal basso verso l'alto):
+
+```
+                    /\
+                   /  \       INTEGRAZIONE
+                  /    \      "I tre progetti fusi in una suite ampliata e
+                 /______\      omogenea: modelli e regole si compongono"
+                /        \
+               /FRAMEWORK \   FRAMEWORK UE
+              /    UE      \  "Porting dei financial tool al quadro normativo
+             /______________\  europeo: MiFID II, Golden Power, SFDR, DORA"
+            /                \
+           /    STRUMENTI     \  STRUMENTI
+          /__________________  \ "Valuation Analyst (Damodaran) e Rating &
+                                  Valuation: modelli per le PMI italiane"
+```
+
+**I tre strati (la storia del progetto):**
+- **Strumenti** — due plugin Claude specifici: Valuation Analyst con metodo Damodaran e Rating & Valuation con modelli su misura per la realta' italiana
+- **Framework UE** — il porting dei financial tool al quadro regolatorio europeo: la compliance diventa dominio
+- **Integrazione** — i tre progetti fusi in un'unica suite ampliata e omogenea, dove modelli e regole parlano la stessa lingua
+
+**Frase chiave:**
+*"Il dominio non si aggiunge tutto insieme: si arricchisce per strati.
+Ogni strato eredita e potenzia quello sotto."*
+
+**Note speaker:**
+"Questa e' la storia del progetto in una piramide. Siamo partiti da due strumenti
+specifici — Valuation Analyst sul metodo Damodaran e Rating & Valuation per le PMI
+italiane. Poi abbiamo portato i financial tool sul framework regolatorio europeo,
+quello della slide precedente. Infine abbiamo integrato i tre progetti in una
+suite unica e omogenea. Non e' stato un big bang: ogni strato ha ereditato e
+arricchito quello sotto. E' cosi' che un dominio cresce — per strati, non per
+sostituzione."
 
 ---
 
@@ -460,7 +495,7 @@ e' il prerequisito per l'adozione."
 
 ---
 
-## Slide 13 — Non Serve un Big Bang
+## Slide 14 — Non Serve un Big Bang
 
 ### Tre modalita' coesistenti — adozione progressiva, non sostitutiva
 
@@ -508,7 +543,7 @@ tutti volevano il modello Excel interattivo. E dopo l'Excel, il credit risk."
 
 ---
 
-## Slide 14 — L'Uomo nel Loop
+## Slide 15 — L'Uomo nel Loop
 
 ### Dove mettere l'umano — e dove toglierlo
 
@@ -560,7 +595,7 @@ secondo questa logica."
 
 ---
 
-## Slide 15 — Misurare il Valore
+## Slide 16 — Misurare il Valore
 
 ### Non "quanti prompt al giorno" — metriche che contano
 
@@ -603,7 +638,7 @@ pilastri di oggi."
 
 ---
 
-## Slide 16 — I Tre Cardini — Recap
+## Slide 17 — I Tre Cardini — Recap
 
 ### Senza uno dei tre, il sistema non regge
 
@@ -651,7 +686,7 @@ vi ho raccontato oggi."
 
 ---
 
-## Slide 17 — Call to Action
+## Slide 18 — Call to Action
 
 ### Smettete di chiedere all'IA di fare cose. Iniziate a costruire sistemi che sanno farle.
 
@@ -685,29 +720,7 @@ e la volonta' di misurare l'output, non l'attivita'. Grazie."
 
 ---
 
-## Backup 1 — Stack Tecnologico
-
-### Cosa c'e' sotto il cofano
-
-| Componente | Tecnologia | Ruolo |
-|---|---|---|
-| LLM | Claude (Anthropic) | Ragionamento, generazione, orchestrazione |
-| Runtime | Claude Code (CLI) | Esecuzione agenti, tool use, file system |
-| Linguaggio | Python 3.11+ | Calcoli, modelli, test |
-| Skill layer | Markdown strutturato | Workflow, vincoli, checkpoint |
-| Dati mercato | Massive.com API | Prezzi, bilanci, fondamentali |
-| Dati settoriali | Damodaran NYU + CSV | Parametri settoriali, master scale |
-| Test | pytest (348 test) | Garanzia di correttezza |
-| Versionamento | Git + GitHub | Audit trail, collaborazione |
-
-**Note speaker:**
-"La scelta tecnologica piu' importante non e' il modello LLM. E' il layer
-di skill — quei file markdown che codificano il dominio. Se domani
-cambiassimo modello, le skill restano. Il dominio e' l'asset."
-
----
-
-## Backup 2 — Esempio Live: Pipeline Credit Risk
+## Backup 1 — Esempio Live: Pipeline Credit Risk
 
 ### Dal bilancio al rating in 5 step
 
@@ -736,7 +749,7 @@ di lavoro collaborativo con l'IA. Non tre mesi — tre sessioni."
 
 ---
 
-## Backup 3 — ROI dell'Approccio
+## Backup 2 — ROI dell'Approccio
 
 ### Investimento vs ritorno
 
