@@ -487,6 +487,58 @@ def domain_enrichment() -> str:
     return doc("".join(body))
 
 
+def prototype_to_production() -> str:
+    """Slide — Dal banco di lavoro al prodotto.
+
+    Prototipo (Claude Code) vs produzione (Agent SDK). Messaggio chiave: il
+    passaggio all'IA agentica non e' un problema di modello, e' ingegneristico.
+    """
+    body = []
+    # PROTOTIPO (sinistra)
+    body.append(rrect(24, 24, 386, 268, SURFACE, rx=16))
+    body.append(rrect(24, 24, 386, 46, SURFACE2, rx=16))
+    body.append(rrect(24, 50, 386, 20, SURFACE2, rx=0))
+    body.append(txt(217, 54, "BANCO DI LAVORO · prototipo", 15, BLUE_DARK, 800))
+    body.append(txt(44, 96, "Claude Code", 17, INK, 800, anchor="start"))
+    items_l = [
+        "Accesso pieno: filesystem, bash, ogni skill",
+        "Sessione interattiva, esplorativa",
+        "Utente: sviluppatore / analista (fidato)",
+        "Qui si scopre QUALI skill servono e DOVE i gate",
+    ]
+    for i, t in enumerate(items_l):
+        yy = 130 + i * 34
+        body.append(circle(54, yy - 4, 3, BLUE))
+        body.append(txt(68, yy, t, 12.5, INK, 500, anchor="start"))
+    # PRODUZIONE (destra)
+    body.append(rrect(490, 24, 386, 268, "#EAF1FF", rx=16, stroke=BLUE, sw=2))
+    body.append(rrect(490, 24, 386, 46, BLUE_DARK, rx=16))
+    body.append(rrect(490, 50, 386, 20, BLUE_DARK, rx=0))
+    body.append(txt(683, 54, "PRODOTTO · produzione", 15, WHITE, 800))
+    body.append(txt(510, 96, "Agent SDK", 17, BLUE_DARK, 800, anchor="start"))
+    items_r = [
+        "Modello interrogato via API",
+        "Harness e scaffold derivati e congelati",
+        "Tool in whitelist · permessi · audit · rate limit",
+        "Utente: finale (non fidato), nessun tool esposto",
+    ]
+    for i, t in enumerate(items_r):
+        yy = 130 + i * 34
+        body.append(circle(520, yy - 4, 3, BLUE_DARK))
+        body.append(txt(534, yy, t, 12.5, INK, 500, anchor="start"))
+    # freccia di derivazione tra i pannelli
+    body.append(arrow(414, 150, 486, 150, BLUE_DARK, 4))
+    body.append(txt(450, 134, "deriva", 11, MUTED, 700))
+    body.append(txt(450, 178, "e congela", 11, MUTED, 700))
+    # banner messaggio chiave
+    body.append(rrect(24, 312, 852, 74, BLUE_DARK, rx=16))
+    body.append(txt(450, 344, "Il passaggio all'IA agentica non e' un problema di MODELLO",
+                    18, WHITE, 800))
+    body.append(txt(450, 371, "e' un problema di INGEGNERIA: scaffold, harness, permessi, API",
+                    14, BLUE_SOFT, 600))
+    return doc("".join(body))
+
+
 def three_rails() -> str:
     """Slide 13 — Tre modalità coesistenti che convergono."""
     body = []
@@ -573,6 +625,7 @@ DIAGRAMS = {
     "09_due_output": two_outputs,
     "10_knowledge_pipeline": knowledge_pipeline,
     "11_arricchimento_dominio": domain_enrichment,
+    "09b_prototipo_produzione": prototype_to_production,
     "13_tre_binari": three_rails,
     "14_matrice_2x2": matrix_2x2,
 }

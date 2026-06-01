@@ -262,7 +262,8 @@ def build(prs):
         prs, "Sotto il cofano: stack tecnologico e fonti dati",
         ["Livello", "Tecnologia / Fonte", "Ruolo"],
         [["LLM", "Claude (Anthropic)", "Ragionamento, generazione, orchestrazione"],
-         ["Runtime", "Claude Code · MCP", "Esecuzione agenti, tool use, integrazioni"],
+         ["Runtime · prototipo", "Claude Code · MCP", "Esplorazione, tool use, sviluppo agenti"],
+         ["Runtime · produzione", "Agent SDK · API", "Agenti in scope ristretto, modello via API"],
          ["Calcolo", "Python 3.11+", "Modelli finanziari · 348 test automatizzati"],
          ["Skill layer", "Markdown strutturato", "Workflow, vincoli, checkpoint"],
          ["Dati di mercato", "Massive · FactSet · Capital IQ · Refinitiv",
@@ -273,6 +274,12 @@ def build(prs):
           "Bilanci, dati societari, depositi"],
          ["Versionamento", "Git + GitHub", "Audit trail, collaborazione"]],
         [1.9, 3.9, 3.0], body_size=10.5)
+
+    # 10 — DAL BANCO DI LAVORO AL PRODOTTO (chiude il Pilastro 1)
+    s = clone_slide(prs, CONTENT)
+    fit_title(s, "Text 0", "Dal banco di lavoro al prodotto: prototipo → produzione")
+    remove(s, "Shape 3"); remove(s, "Text 4")
+    add_diagram(s, prs, D.prototype_to_production())
 
     # --- DIVIDER Pilastro 2
     s = clone_slide(prs, DIVIDER)

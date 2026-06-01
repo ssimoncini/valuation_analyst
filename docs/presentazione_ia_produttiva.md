@@ -1,7 +1,7 @@
 # L'IA che Lavora: Architettura, Dominio, Strategia — Come Trasformare un Chatbot in un Collega
 
 **Durata**: 25 minuti
-**Formato**: 18 slide + 2 backup
+**Formato**: 19 slide + 2 backup
 **Caso reale**: Valuation Analyst — sistema multi-agente per valutazione aziendale e credit risk
 
 ---
@@ -303,7 +303,8 @@ e' adottabile in un contesto reale."
 | Livello | Tecnologia / Fonte | Ruolo |
 |---|---|---|
 | LLM | Claude (Anthropic) | Ragionamento, generazione, orchestrazione |
-| Runtime | Claude Code · MCP | Esecuzione agenti, tool use, integrazioni |
+| Runtime · prototipo | Claude Code · MCP | Esplorazione, tool use, sviluppo agenti |
+| Runtime · produzione | Agent SDK · API | Agenti in scope ristretto, modello via API |
 | Calcolo | Python 3.11+ | Modelli finanziari · 348 test automatizzati |
 | Skill layer | Markdown strutturato | Workflow, vincoli, checkpoint |
 | Dati di mercato | Massive · FactSet · Capital IQ · Refinitiv | Prezzi, fondamentali, consensus |
@@ -314,6 +315,7 @@ e' adottabile in un contesto reale."
 **Il punto:**
 - La scelta piu' importante non e' il modello LLM — e' il layer di skill che codifica il dominio
 - Le fonti dati sono provider professionali, non file sparsi: mercato e fondamentali da Massive/FactSet/Capital IQ/Refinitiv, parametri di settore da Damodaran, bilanci italiani da Bureau van Dijk/CONSOB/Borsa Italiana
+- Il runtime di prototipazione (Claude Code) non e' quello di produzione: in produzione gli agenti girano via Agent SDK, con il modello interrogato per API e i tool ristretti
 - Se domani cambiasse il modello, skill e fonti restano: il dominio e' l'asset
 
 **Frase chiave:**
@@ -330,11 +332,58 @@ ed e' indipendente dal modello sottostante."
 
 ---
 
+## Slide 10 — Dal Banco di Lavoro al Prodotto
+
+### Claude Code prototipa, l'Agent SDK spedisce — il salto e' ingegneristico, non di modello
+
+**Visual:** Due pannelli a confronto con un messaggio chiave in basso:
+
+```
+BANCO DI LAVORO — prototipo          PRODOTTO — produzione
+Claude Code                          Agent SDK
+- Accesso pieno: filesystem,    →    - Modello interrogato via API
+  bash, ogni skill                   - Harness e scaffold derivati e congelati
+- Sessione interattiva               - Tool in whitelist, permessi, audit,
+- Utente: sviluppatore (fidato)        rate limit
+- Si scopre QUALI skill servono      - Utente: finale (non fidato),
+  e DOVE mettere i gate                nessun tool esposto
+
+      ┌──────────────────────────────────────────────────────────┐
+      │  Il passaggio all'IA agentica NON e' un problema di       │
+      │  MODELLO — e' un problema di INGEGNERIA:                  │
+      │  scaffold, harness, permessi, API                        │
+      └──────────────────────────────────────────────────────────┘
+```
+
+**Il punto:**
+- Claude Code caricato con le skill ha prerogative che un utente finale non deve avere (filesystem, esecuzione di codice, invocazione libera delle skill): e' un ambiente di prototipazione, non un'interfaccia utente
+- In produzione si parla di **agenti realizzati con l'Agent SDK**, con scaffold e harness *derivati* dal comportamento degli agenti prototipati, ma inseriti in uno scope dove il modello viene interrogato via **API**
+- Il confine vero non e' "Claude Code si'/no" ma la **persona e il confine di fiducia**: interno e tecnico (l'analista) e' un banco di lavoro legittimo; esterno e scalato richiede agenti SDK con tool ristretti, auth e audit
+- Claude Code e' dove *scopri* quali skill servono e dove mettere i gate; l'SDK e' dove quel comportamento validato lo *congeli* e lo spedisci
+
+**Frase chiave:**
+*"Il passaggio all'IA agentica non e' un problema di modello — e' un problema
+di ingegneria. Il modello e' lo stesso: cambia lo scaffold attorno."*
+
+**Note speaker:**
+"Chiudo l'architettura con il punto piu' importante per chi deve portare questa
+roba in produzione. Quello che vedete in queste slide e' Claude Code: un banco
+di lavoro potentissimo, ma con prerogative — accesso al filesystem, esecuzione
+di codice, ogni skill a portata — che NON si danno a un utente finale. In
+produzione non spedite Claude Code: spedite agenti costruiti con l'Agent SDK,
+con lo scaffold e l'harness derivati dal comportamento che avete prototipato
+qui, e il modello interrogato via API in uno scope ristretto. E' la frase da
+ricordare: il salto verso l'IA agentica non e' un problema di modello — il
+modello e' lo stesso — e' un problema di ingegneria. Scaffold, harness,
+permessi, API. Per questo l'architettura e' il primo pilastro."
+
+---
+
 ## PILASTRO 2 — CONOSCENZA DEL DOMINIO
 
 ---
 
-## Slide 10 — Il Brillante Incompetente
+## Slide 11 — Il Brillante Incompetente
 
 ### Senza dominio, l'IA sbaglia le cose che contano
 
@@ -374,7 +423,7 @@ cosa controllare."
 
 ---
 
-## Slide 11 — Il Dominio Si Codifica
+## Slide 12 — Il Dominio Si Codifica
 
 ### Come si insegna un mestiere all'IA: paper → formule → vincoli → errori
 
@@ -414,7 +463,7 @@ la formula non si applica."
 
 ---
 
-## Slide 12 — La Compliance Come Dominio
+## Slide 13 — La Compliance Come Dominio
 
 ### Il porting dei financial tool al framework regolatorio europeo
 
@@ -450,7 +499,7 @@ non e' il freno dell'innovazione — e' il prerequisito per l'adozione."
 
 ---
 
-## Slide 13 — Arricchire il Dominio
+## Slide 14 — Arricchire il Dominio
 
 ### Dallo strumento specifico alla suite integrata: tre strati che si arricchiscono
 
@@ -495,7 +544,7 @@ sostituzione."
 
 ---
 
-## Slide 14 — Non Serve un Big Bang
+## Slide 15 — Non Serve un Big Bang
 
 ### Tre modalita' coesistenti — adozione progressiva, non sostitutiva
 
@@ -543,7 +592,7 @@ tutti volevano il modello Excel interattivo. E dopo l'Excel, il credit risk."
 
 ---
 
-## Slide 15 — L'Uomo nel Loop
+## Slide 16 — L'Uomo nel Loop
 
 ### Dove mettere l'umano — e dove toglierlo
 
@@ -595,7 +644,7 @@ secondo questa logica."
 
 ---
 
-## Slide 16 — Misurare il Valore
+## Slide 17 — Misurare il Valore
 
 ### Non "quanti prompt al giorno" — metriche che contano
 
@@ -638,7 +687,7 @@ pilastri di oggi."
 
 ---
 
-## Slide 17 — I Tre Cardini — Recap
+## Slide 18 — I Tre Cardini — Recap
 
 ### Senza uno dei tre, il sistema non regge
 
@@ -686,7 +735,7 @@ vi ho raccontato oggi."
 
 ---
 
-## Slide 18 — Call to Action
+## Slide 19 — Call to Action
 
 ### Smettete di chiedere all'IA di fare cose. Iniziate a costruire sistemi che sanno farle.
 

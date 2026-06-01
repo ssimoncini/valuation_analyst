@@ -306,6 +306,7 @@ def convert(md_text: str) -> str:
         ("Skill Come Contratti", "Workflow con garanzie"),
         ("Autonomia Controllata", "Decision gate"),
         ("Stack e Fonti Dati", "Cosa c'e' sotto il cofano"),
+        ("Prototipo -> Produzione", "Claude Code prototipa, l'SDK spedisce"),
         ("Il Brillante Incompetente", "Senza dominio, errori critici"),
         ("Il Dominio Si Codifica", "Paper, codice, skill"),
         ("Compliance Come Dominio", "Il porting al framework UE"),

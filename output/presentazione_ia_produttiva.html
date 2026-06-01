@@ -221,11 +221,11 @@ hr { display: none; }
 <div class="container">
 <div class="toc">
 <h2>Indice</h2>
-<ol><li>Titolo</li><li>Il Problema — Il 90% usa l'IA come motore di ricerca</li><li>Collaboratore Creativo — Non un programma, un collega</li><li>I Tre Pilastri — Architettura, Dominio, Strategia</li><li>Un Tool Non Scala — La scala della maturita'</li><li>Sistema Multi-Agente — 24 agenti, 76 skill</li><li>Skill Come Contratti — Workflow con garanzie</li><li>Autonomia Controllata — Decision gate</li><li>Stack e Fonti Dati — Cosa c'e' sotto il cofano</li><li>Il Brillante Incompetente — Senza dominio, errori critici</li><li>Il Dominio Si Codifica — Paper, codice, skill</li><li>Compliance Come Dominio — Il porting al framework UE</li><li>Arricchire il Dominio — Dallo strumento alla suite</li><li>Non Serve un Big Bang — Adozione progressiva</li><li>L'Uomo nel Loop — Matrice rischio/reversibilita'</li><li>Misurare il Valore — Metriche che contano</li><li>Recap — I tre cardini</li><li>Call to Action — 3 azioni per lunedi'</li><li>Pipeline Credit Risk — Backup</li><li>ROI dell'Approccio — Backup</li></ol>
+<ol><li>Titolo</li><li>Il Problema — Il 90% usa l'IA come motore di ricerca</li><li>Collaboratore Creativo — Non un programma, un collega</li><li>I Tre Pilastri — Architettura, Dominio, Strategia</li><li>Un Tool Non Scala — La scala della maturita'</li><li>Sistema Multi-Agente — 24 agenti, 76 skill</li><li>Skill Come Contratti — Workflow con garanzie</li><li>Autonomia Controllata — Decision gate</li><li>Stack e Fonti Dati — Cosa c'e' sotto il cofano</li><li>Prototipo -> Produzione — Claude Code prototipa, l'SDK spedisce</li><li>Il Brillante Incompetente — Senza dominio, errori critici</li><li>Il Dominio Si Codifica — Paper, codice, skill</li><li>Compliance Come Dominio — Il porting al framework UE</li><li>Arricchire il Dominio — Dallo strumento alla suite</li><li>Non Serve un Big Bang — Adozione progressiva</li><li>L'Uomo nel Loop — Matrice rischio/reversibilita'</li><li>Misurare il Valore — Metriche che contano</li><li>Recap — I tre cardini</li><li>Call to Action — 3 azioni per lunedi'</li><li>Pipeline Credit Risk — Backup</li><li>ROI dell'Approccio — Backup</li></ol>
 </div>
 <div class="cover"><h1>L'IA che Lavora: Architettura, Dominio, Strategia — Come Trasformare un Chatbot in un Collega</h1>
 <p><strong>Durata</strong>: 25 minuti
-<strong>Formato</strong>: 18 slide + 2 backup
+<strong>Formato</strong>: 19 slide + 2 backup
 <strong>Caso reale</strong>: Valuation Analyst — sistema multi-agente per valutazione aziendale e credit risk</p>
 </div><div class="slide" data-num="01">
 <h2>Slide 1 — Titolo</h2>
@@ -545,9 +545,14 @@ e' adottabile in un contesto reale.&quot;</p>
 <td>Ragionamento, generazione, orchestrazione</td>
 </tr>
 <tr>
-<td>Runtime</td>
+<td>Runtime · prototipo</td>
 <td>Claude Code · MCP</td>
-<td>Esecuzione agenti, tool use, integrazioni</td>
+<td>Esplorazione, tool use, sviluppo agenti</td>
+</tr>
+<tr>
+<td>Runtime · produzione</td>
+<td>Agent SDK · API</td>
+<td>Agenti in scope ristretto, modello via API</td>
 </tr>
 <tr>
 <td>Calcolo</td>
@@ -585,6 +590,7 @@ e' adottabile in un contesto reale.&quot;</p>
 <ul>
 <li>La scelta piu' importante non e' il modello LLM — e' il layer di skill che codifica il dominio</li>
 <li>Le fonti dati sono provider professionali, non file sparsi: mercato e fondamentali da Massive/FactSet/Capital IQ/Refinitiv, parametri di settore da Damodaran, bilanci italiani da Bureau van Dijk/CONSOB/Borsa Italiana</li>
+<li>Il runtime di prototipazione (Claude Code) non e' quello di produzione: in produzione gli agenti girano via Agent SDK, con il modello interrogato per API e i tool ristretti</li>
 <li>Se domani cambiasse il modello, skill e fonti restano: il dominio e' l'asset</li>
 </ul>
 <p>
@@ -598,8 +604,49 @@ settore, Bureau van Dijk, CONSOB e Borsa Italiana per le societa' italiane. Ma
 la cosa che conta di piu' resta il layer di skill: e' li' che vive il dominio,
 ed e' indipendente dal modello sottostante.&quot;</p>
 </div>
-</div><div class="section-divider">PILASTRO 2 — CONOSCENZA DEL DOMINIO</div><div class="slide" data-num="10">
-<h2>Slide 10 — Il Brillante Incompetente</h2>
+</div><div class="slide" data-num="10">
+<h2>Slide 10 — Dal Banco di Lavoro al Prodotto</h2>
+<h3>Claude Code prototipa, l'Agent SDK spedisce — il salto e' ingegneristico, non di modello</h3>
+<p><strong>Visual:</strong> Due pannelli a confronto con un messaggio chiave in basso:</p>
+<pre><code>BANCO DI LAVORO — prototipo          PRODOTTO — produzione
+Claude Code                          Agent SDK
+- Accesso pieno: filesystem,    →    - Modello interrogato via API
+  bash, ogni skill                   - Harness e scaffold derivati e congelati
+- Sessione interattiva               - Tool in whitelist, permessi, audit,
+- Utente: sviluppatore (fidato)        rate limit
+- Si scopre QUALI skill servono      - Utente: finale (non fidato),
+  e DOVE mettere i gate                nessun tool esposto
+
+      ┌──────────────────────────────────────────────────────────┐
+      │  Il passaggio all'IA agentica NON e' un problema di       │
+      │  MODELLO — e' un problema di INGEGNERIA:                  │
+      │  scaffold, harness, permessi, API                        │
+      └──────────────────────────────────────────────────────────┘
+</code></pre>
+<p><strong>Il punto:</strong></p>
+<ul>
+<li>Claude Code caricato con le skill ha prerogative che un utente finale non deve avere (filesystem, esecuzione di codice, invocazione libera delle skill): e' un ambiente di prototipazione, non un'interfaccia utente</li>
+<li>In produzione si parla di <strong>agenti realizzati con l'Agent SDK</strong>, con scaffold e harness <em>derivati</em> dal comportamento degli agenti prototipati, ma inseriti in uno scope dove il modello viene interrogato via <strong>API</strong></li>
+<li>Il confine vero non e' &quot;Claude Code si'/no&quot; ma la <strong>persona e il confine di fiducia</strong>: interno e tecnico (l'analista) e' un banco di lavoro legittimo; esterno e scalato richiede agenti SDK con tool ristretti, auth e audit</li>
+<li>Claude Code e' dove <em>scopri</em> quali skill servono e dove mettere i gate; l'SDK e' dove quel comportamento validato lo <em>congeli</em> e lo spedisci</li>
+</ul>
+<p>
+<em>&quot;Il passaggio all'IA agentica non e' un problema di modello — e' un problema
+di ingegneria. Il modello e' lo stesso: cambia lo scaffold attorno.&quot;</em></p>
+<p><div class="speaker-notes">
+&quot;Chiudo l'architettura con il punto piu' importante per chi deve portare questa
+roba in produzione. Quello che vedete in queste slide e' Claude Code: un banco
+di lavoro potentissimo, ma con prerogative — accesso al filesystem, esecuzione
+di codice, ogni skill a portata — che NON si danno a un utente finale. In
+produzione non spedite Claude Code: spedite agenti costruiti con l'Agent SDK,
+con lo scaffold e l'harness derivati dal comportamento che avete prototipato
+qui, e il modello interrogato via API in uno scope ristretto. E' la frase da
+ricordare: il salto verso l'IA agentica non e' un problema di modello — il
+modello e' lo stesso — e' un problema di ingegneria. Scaffold, harness,
+permessi, API. Per questo l'architettura e' il primo pilastro.&quot;</p>
+</div>
+</div><div class="section-divider">PILASTRO 2 — CONOSCENZA DEL DOMINIO</div><div class="slide" data-num="11">
+<h2>Slide 11 — Il Brillante Incompetente</h2>
 <h3>Senza dominio, l'IA sbaglia le cose che contano</h3>
 <p><strong>Visual:</strong> Due output a confronto — stesso prompt, risultati opposti:</p>
 <pre><code>PROMPT: &quot;Valuta il Terminal Value di questa azienda&quot;
@@ -632,8 +679,8 @@ di Bergamo. Se gli analisti umani sbagliano il TV, figuriamoci un'IA
 generica. La soluzione non e' un'IA piu' potente — e' un'IA che sa
 cosa controllare.&quot;</p>
 </div>
-</div><div class="slide" data-num="11">
-<h2>Slide 11 — Il Dominio Si Codifica</h2>
+</div><div class="slide" data-num="12">
+<h2>Slide 12 — Il Dominio Si Codifica</h2>
 <h3>Come si insegna un mestiere all'IA: paper → formule → vincoli → errori</h3>
 <p><strong>Visual:</strong> Pipeline di codifica della conoscenza:</p>
 <pre><code>PAPER ACCADEMICI              CODICE PYTHON              SKILL OPERATIVA
@@ -684,8 +731,8 @@ di programmazione. E' stato un lavoro di ingegneria della conoscenza.
 La parte difficile non e' implementare la formula — e' capire quando
 la formula non si applica.&quot;</p>
 </div>
-</div><div class="slide" data-num="12">
-<h2>Slide 12 — La Compliance Come Dominio</h2>
+</div><div class="slide" data-num="13">
+<h2>Slide 13 — La Compliance Come Dominio</h2>
 <h3>Il porting dei financial tool al framework regolatorio europeo</h3>
 <p><strong>Visual:</strong> Tabella degli 8 ambiti normativi codificati:</p>
 <table>
@@ -756,8 +803,8 @@ Se l'IA non conosce queste regole, ogni suo output deve essere rivisto da un
 compliance officer. Se le conosce, l'output esce gia' utilizzabile. La compliance
 non e' il freno dell'innovazione — e' il prerequisito per l'adozione.&quot;</p>
 </div>
-</div><div class="slide" data-num="13">
-<h2>Slide 13 — Arricchire il Dominio</h2>
+</div><div class="slide" data-num="14">
+<h2>Slide 14 — Arricchire il Dominio</h2>
 <h3>Dallo strumento specifico alla suite integrata: tre strati che si arricchiscono</h3>
 <p><strong>Visual:</strong> Piramide dell'arricchimento del dominio (dal basso verso l'alto):</p>
 <pre><code>                    /\
@@ -791,8 +838,8 @@ suite unica e omogenea. Non e' stato un big bang: ogni strato ha ereditato e
 arricchito quello sotto. E' cosi' che un dominio cresce — per strati, non per
 sostituzione.&quot;</p>
 </div>
-</div><div class="section-divider">PILASTRO 3 — STRATEGIA DI ADOZIONE</div><div class="slide" data-num="14">
-<h2>Slide 14 — Non Serve un Big Bang</h2>
+</div><div class="section-divider">PILASTRO 3 — STRATEGIA DI ADOZIONE</div><div class="slide" data-num="15">
+<h2>Slide 15 — Non Serve un Big Bang</h2>
 <h3>Tre modalita' coesistenti — adozione progressiva, non sostitutiva</h3>
 <p><strong>Visual:</strong> Tre binari paralleli che convergono:</p>
 <pre><code>MODALITA' 1: Damodaran (Python)          Per chi gia' usa Python
@@ -830,8 +877,8 @@ Nel nostro caso: il report automatico e' stato il cavallo di Troia.
 Nessuno si sentiva minacciato da un PDF generato. Ma dopo averlo visto,
 tutti volevano il modello Excel interattivo. E dopo l'Excel, il credit risk.&quot;</p>
 </div>
-</div><div class="slide" data-num="15">
-<h2>Slide 15 — L'Uomo nel Loop</h2>
+</div><div class="slide" data-num="16">
+<h2>Slide 16 — L'Uomo nel Loop</h2>
 <h3>Dove mettere l'umano — e dove toglierlo</h3>
 <p><strong>Visual:</strong> Matrice 2x2:</p>
 <pre><code>                   REVERSIBILE              IRREVERSIBILE
@@ -877,8 +924,8 @@ se l'IA puo' procedere da sola o deve fermarsi a chiedere.
 Nel nostro sistema, i decision gate sono posizionati esattamente
 secondo questa logica.&quot;</p>
 </div>
-</div><div class="slide" data-num="16">
-<h2>Slide 16 — Misurare il Valore</h2>
+</div><div class="slide" data-num="17">
+<h2>Slide 17 — Misurare il Valore</h2>
 <h3>Non &quot;quanti prompt al giorno&quot; — metriche che contano</h3>
 <p><strong>Visual:</strong> Due colonne — metriche sbagliate vs metriche giuste:</p>
 <table>
@@ -957,8 +1004,8 @@ produttivo senza rework? Se la risposta e' 'pochi', il problema non
 e' l'IA — e' l'architettura, il dominio o la strategia. Cioe' i tre
 pilastri di oggi.&quot;</p>
 </div>
-</div><div class="section-divider">CHIUSURA</div><div class="slide" data-num="17">
-<h2>Slide 17 — I Tre Cardini — Recap</h2>
+</div><div class="section-divider">CHIUSURA</div><div class="slide" data-num="18">
+<h2>Slide 18 — I Tre Cardini — Recap</h2>
 <h3>Senza uno dei tre, il sistema non regge</h3>
 <p><strong>Visual:</strong> Triangolo con conseguenze della mancanza:</p>
 <pre><code>              ARCHITETTURA
@@ -1018,8 +1065,8 @@ E la cosa piu' importante: non e' partito cosi'. E' partito da un prompt.
 Il percorso da prompt a sistema produttivo e' esattamente quello che
 vi ho raccontato oggi.&quot;</p>
 </div>
-</div><div class="slide" data-num="18">
-<h2>Slide 18 — Call to Action</h2>
+</div><div class="slide" data-num="19">
+<h2>Slide 19 — Call to Action</h2>
 <h3>Smettete di chiedere all'IA di fare cose. Iniziate a costruire sistemi che sanno farle.</h3>
 <p><strong>Tre azioni concrete per lunedi' mattina:</strong></p>
 <ol>
@@ -1047,7 +1094,7 @@ approvazioni, non serve un team di data scientist. Servono 30 minuti
 per scrivere un workflow come skill, 15 minuti per mappare i decision gate,
 e la volonta' di misurare l'output, non l'attivita'. Grazie.&quot;</p>
 </div>
-</div><div class="section-divider">SLIDE BACKUP (se ci sono domande)</div><div class="slide" data-num="19">
+</div><div class="section-divider">SLIDE BACKUP (se ci sono domande)</div><div class="slide" data-num="20">
 <h2>Backup 1 — Esempio Live: Pipeline Credit Risk</h2>
 <h3>Dal bilancio al rating in 5 step</h3>
 <pre><code>STEP 1: Dataset            STEP 2: BMS settoriale
@@ -1071,7 +1118,7 @@ Debito endogeno             EL = 1.2M, UL 95% = 3.8M
 tre paper accademici in codice e skill. Il tempo totale: tre sessioni
 di lavoro collaborativo con l'IA. Non tre mesi — tre sessioni.&quot;</p>
 </div>
-</div><div class="slide" data-num="20">
+</div><div class="slide" data-num="21">
 <h2>Backup 2 — ROI dell'Approccio</h2>
 <h3>Investimento vs ritorno</h3>
 <table>
