@@ -1,7 +1,7 @@
 # L'IA che Lavora: Architettura, Dominio, Strategia — Come Trasformare un Chatbot in un Collega
 
 **Durata**: 25 minuti
-**Formato**: 19 slide + 2 backup
+**Formato**: 20 slide + 2 backup
 **Caso reale**: Valuation Analyst — sistema multi-agente per valutazione aziendale e credit risk
 
 ---
@@ -11,6 +11,10 @@
 ### L'IA che Lavora
 #### Architettura, Dominio, Strategia — Come Trasformare un Chatbot in un Collega
 
+> «La tecnica non è neutrale, perché assume il volto di chi la pensa,
+> la finanzia, la regola, la usa.»
+> — Leone XIV, *Magnifica Humanitas* (2026), §9
+
 [Nome relatore]
 [Data, evento]
 
@@ -18,6 +22,10 @@
 Presentarsi in 15 secondi. Non partire dalla tecnologia, partire dal problema.
 "Oggi non parliamo di cosa l'IA puo' fare in teoria. Parliamo di cosa serve
 perche' faccia davvero qualcosa di utile in pratica."
+Usare l'epigrafe come cornice, senza appesantire: "Parto da una frase che non
+viene dalla Silicon Valley ma da un'enciclica del 2026: la tecnica non e'
+neutrale, prende il volto di chi la progetta. Tenetela a mente — ci torno alla
+fine." Apre l'arco che si chiude alla slide 'Il volto della tecnica'.
 
 ---
 
@@ -735,7 +743,59 @@ vi ho raccontato oggi."
 
 ---
 
-## Slide 19 — Call to Action
+## Slide 19 — Il Volto della Tecnica
+
+### Avere il dominio dell'architettura è poterla orientare — anche verso la persona
+
+**Visual:** Tre stadi — la tecnica non è neutrale → i tre cardini sono il volto
+che le diamo → orientata alla persona:
+
+```
+LA TECNICA              IL DOMINIO              ORIENTATA
+NON È NEUTRALE    →    DELL'ARCHITETTURA   →   ALLA PERSONA
+«assume il volto       · ARCHITETTURA          · Gate: il giudizio
+ di chi la pensa,      · DOMINIO                  umano resta centrale
+ la finanzia,          · STRATEGIA             · Dominio: responsabilità
+ la regola, la usa»                               codificata
+ §9                    = il volto che          · Strategia: l'uomo dove
+                         le diamo                 aggiunge giudizio
+```
+
+**Il punto:**
+- L'enciclica *Magnifica Humanitas* (Leone XIV, 2026) ricorda che la tecnica
+  «non e' neutrale, perche' assume il volto di chi la pensa, la finanzia, la
+  regola, la usa» (§9)
+- Se non e' neutrale, qualcuno le da' comunque un volto: i tre cardini —
+  architettura, dominio, strategia — sono esattamente il volto che le diamo
+- I decision gate tengono il **giudizio umano** al centro; il dominio codifica la
+  **responsabilita'**; la strategia mette «l'uomo dove aggiunge giudizio» — il
+  primato del lavoro umano «su ogni logica puramente produttiva o finanziaria» (§30)
+- Non e' un vincolo etico calato dall'alto sulla tecnica: e' una conseguenza
+  **tecnologica**. Solo chi ha il dominio dell'architettura puo' decidere «a
+  quali fini orientarla» (§5). Senza quel dominio, l'orientamento lo decide
+  qualcun altro — o nessuno
+
+**Frase chiave:**
+*"La tecnica non e' neutrale: prende il volto di chi la progetta. Avere il dominio
+dell'architettura e' poter scegliere che quel volto sia umano."*
+
+**Note speaker:**
+"Chiudo riannodando l'arco aperto all'inizio. Tutto quello che vi ho mostrato —
+agenti, skill, decision gate, uomo nel loop — non e' solo ingegneria
+dell'efficienza. E' la risposta tecnica a una domanda che l'enciclica pone in
+termini etici: la tecnica non e' neutrale, prende il volto di chi la progetta e
+la governa. La conseguenza non e' un appello buonista — e' molto concreta: se
+non siete voi ad avere il dominio dell'architettura, l'orientamento della
+tecnologia lo decide qualcun altro, o il caso. I tre cardini sono il modo in cui
+si tiene la persona al centro: i gate proteggono il giudizio umano, il dominio
+codifica la responsabilita', la strategia mette l'uomo dove aggiunge valore. Per
+questo l'architettura non e' un tema da informatici: e' la precondizione per
+orientare l'IA verso fini umani. Ed e' anche il motivo per cui questo lavoro non
+si delega in blocco a una black box." Pausa, poi passare alla call to action.
+
+---
+
+## Slide 20 — Call to Action
 
 ### Smettete di chiedere all'IA di fare cose. Iniziate a costruire sistemi che sanno farle.
 

@@ -315,6 +315,7 @@ def convert(md_text: str) -> str:
         ("L'Uomo nel Loop", "Matrice rischio/reversibilita'"),
         ("Misurare il Valore", "Metriche che contano"),
         ("Recap", "I tre cardini"),
+        ("Il Volto della Tecnica", "Architettura = orientare verso la persona"),
         ("Call to Action", "3 azioni per lunedi'"),
         ("Pipeline Credit Risk", "Backup"),
         ("ROI dell'Approccio", "Backup"),

@@ -614,6 +614,69 @@ def matrix_2x2() -> str:
     return doc("".join(body))
 
 
+def human_centrality() -> str:
+    """Slide di chiusura — Il volto della tecnica.
+
+    Tesi: avere il dominio dell'architettura e' poter orientare la tecnologia
+    verso la centralita' della persona umana (enciclica 'Magnifica Humanitas',
+    Leone XIV, 2026). Tre stadi: la tecnica non e' neutrale -> i tre cardini
+    sono il volto che le diamo -> orientata alla persona.
+    """
+    body = []
+    top, ph = 22, 300
+    # LEFT — la tecnica non e' neutrale (le due epigrafi, §9 e §5)
+    body.append(rrect(24, top, 244, ph, SURFACE, rx=16))
+    body.append(rrect(24, top, 244, 44, SURFACE2, rx=16))
+    body.append(rrect(24, top + 24, 244, 20, SURFACE2, rx=0))
+    body.append(txt(146, top + 28, "LA TECNICA NON È NEUTRALE", 11.5, BLUE_DARK, 800))
+    for i, l in enumerate(["«Assume il volto", "di chi la pensa,",
+                           "la finanzia, la regola,", "la usa»"]):
+        body.append(txt(146, top + 72 + i * 23, l, 13.5, INK, 600, italic=True))
+    body.append(txt(146, top + 182, "Leone XIV · Magnifica Humanitas · §9",
+                    9.5, MUTED, 600))
+    body.append(ln(46, top + 198, 246, top + 198, LINE, 1))
+    for i, l in enumerate(["«chi detenga il potere", "e a quali fini lo orienti»"]):
+        body.append(txt(146, top + 224 + i * 23, l, 13.5, INK, 600, italic=True))
+    body.append(txt(146, top + 282, "Leone XIV · Magnifica Humanitas · §5",
+                    9.5, MUTED, 600))
+    body.append(arrow(272, top + 150, 300, top + 150, BLUE_DARK, 4))
+    # CENTER — il dominio dell'architettura (i tre cardini)
+    body.append(rrect(304, top, 292, ph, "#EAF1FF", rx=16, stroke=BLUE, sw=2))
+    body.append(rrect(304, top, 292, 44, BLUE, rx=16))
+    body.append(rrect(304, top + 24, 292, 20, BLUE, rx=0))
+    body.append(txt(450, top + 28, "IL DOMINIO DELL'ARCHITETTURA", 11.5, WHITE, 800))
+    for i, c in enumerate(["ARCHITETTURA", "DOMINIO", "STRATEGIA"]):
+        body.append(chip(450, top + 96 + i * 50, 210, 36, c, 14,
+                         BLUE_DARK, WHITE, weight=800))
+    body.append(txt(450, top + 272, "i tre cardini = il volto che le diamo",
+                    11.5, INK, 600, italic=True))
+    body.append(arrow(600, top + 150, 628, top + 150, BLUE_DARK, 4))
+    # RIGHT — orientata alla persona
+    body.append(rrect(632, top, 244, ph, BLUE_DARK, rx=16))
+    body.append(txt(754, top + 40, "ORIENTATA", 16, WHITE, 800))
+    body.append(txt(754, top + 62, "ALLA PERSONA", 16, BLUE_SOFT, 800))
+    bullets = [
+        ("Gate", ["il giudizio umano", "resta centrale"]),
+        ("Dominio", ["responsabilità", "codificata"]),
+        ("Strategia", ["l'uomo dove", "aggiunge giudizio"]),
+    ]
+    for i, (h, ds) in enumerate(bullets):
+        yy = top + 110 + i * 58
+        body.append(circle(654, yy - 4, 3, BLUE_SOFT))
+        body.append(txt(666, yy, h, 12.5, WHITE, 800, anchor="start"))
+        for j, d in enumerate(ds):
+            body.append(txt(666, yy + 16 + j * 15, d, 11, BLUE_SOFT, 500, anchor="start"))
+    # banner — solo la tesi (le citazioni sono nel box di sinistra)
+    body.append(rrect(24, 332, 852, 62, BLUE_DARK, rx=16))
+    body.append(txt(450, 358,
+                    "Solo con il controllo dell'architettura, la conoscenza del dominio",
+                    15.5, WHITE, 800))
+    body.append(txt(450, 381,
+                    "e una strategia consapevole la si orienta verso la persona",
+                    15.5, WHITE, 800))
+    return doc("".join(body))
+
+
 # Mappa nome → funzione, per generazione batch
 DIAGRAMS = {
     "02_piramide_adozione": pyramid_adozione,
@@ -628,6 +691,7 @@ DIAGRAMS = {
     "09b_prototipo_produzione": prototype_to_production,
     "13_tre_binari": three_rails,
     "14_matrice_2x2": matrix_2x2,
+    "18_volto_tecnica": human_centrality,
 }
 
 

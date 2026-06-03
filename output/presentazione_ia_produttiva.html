@@ -221,22 +221,31 @@ hr { display: none; }
 <div class="container">
 <div class="toc">
 <h2>Indice</h2>
-<ol><li>Titolo</li><li>Il Problema — Il 90% usa l'IA come motore di ricerca</li><li>Collaboratore Creativo — Non un programma, un collega</li><li>I Tre Pilastri — Architettura, Dominio, Strategia</li><li>Un Tool Non Scala — La scala della maturita'</li><li>Sistema Multi-Agente — 24 agenti, 76 skill</li><li>Skill Come Contratti — Workflow con garanzie</li><li>Autonomia Controllata — Decision gate</li><li>Stack e Fonti Dati — Cosa c'e' sotto il cofano</li><li>Prototipo -> Produzione — Claude Code prototipa, l'SDK spedisce</li><li>Il Brillante Incompetente — Senza dominio, errori critici</li><li>Il Dominio Si Codifica — Paper, codice, skill</li><li>Compliance Come Dominio — Il porting al framework UE</li><li>Arricchire il Dominio — Dallo strumento alla suite</li><li>Non Serve un Big Bang — Adozione progressiva</li><li>L'Uomo nel Loop — Matrice rischio/reversibilita'</li><li>Misurare il Valore — Metriche che contano</li><li>Recap — I tre cardini</li><li>Call to Action — 3 azioni per lunedi'</li><li>Pipeline Credit Risk — Backup</li><li>ROI dell'Approccio — Backup</li></ol>
+<ol><li>Titolo</li><li>Il Problema — Il 90% usa l'IA come motore di ricerca</li><li>Collaboratore Creativo — Non un programma, un collega</li><li>I Tre Pilastri — Architettura, Dominio, Strategia</li><li>Un Tool Non Scala — La scala della maturita'</li><li>Sistema Multi-Agente — 24 agenti, 76 skill</li><li>Skill Come Contratti — Workflow con garanzie</li><li>Autonomia Controllata — Decision gate</li><li>Stack e Fonti Dati — Cosa c'e' sotto il cofano</li><li>Prototipo -> Produzione — Claude Code prototipa, l'SDK spedisce</li><li>Il Brillante Incompetente — Senza dominio, errori critici</li><li>Il Dominio Si Codifica — Paper, codice, skill</li><li>Compliance Come Dominio — Il porting al framework UE</li><li>Arricchire il Dominio — Dallo strumento alla suite</li><li>Non Serve un Big Bang — Adozione progressiva</li><li>L'Uomo nel Loop — Matrice rischio/reversibilita'</li><li>Misurare il Valore — Metriche che contano</li><li>Recap — I tre cardini</li><li>Il Volto della Tecnica — Architettura = orientare verso la persona</li><li>Call to Action — 3 azioni per lunedi'</li><li>Pipeline Credit Risk — Backup</li><li>ROI dell'Approccio — Backup</li></ol>
 </div>
 <div class="cover"><h1>L'IA che Lavora: Architettura, Dominio, Strategia — Come Trasformare un Chatbot in un Collega</h1>
 <p><strong>Durata</strong>: 25 minuti
-<strong>Formato</strong>: 19 slide + 2 backup
+<strong>Formato</strong>: 20 slide + 2 backup
 <strong>Caso reale</strong>: Valuation Analyst — sistema multi-agente per valutazione aziendale e credit risk</p>
 </div><div class="slide" data-num="01">
 <h2>Slide 1 — Titolo</h2>
 <h3>L'IA che Lavora</h3>
 <h4>Architettura, Dominio, Strategia — Come Trasformare un Chatbot in un Collega</h4>
+<blockquote>
+<p>«La tecnica non è neutrale, perché assume il volto di chi la pensa,
+la finanzia, la regola, la usa.»
+— Leone XIV, <em>Magnifica Humanitas</em> (2026), §9</p>
+</blockquote>
 <p>[Nome relatore]
 [Data, evento]</p>
 <p><div class="speaker-notes">
 Presentarsi in 15 secondi. Non partire dalla tecnologia, partire dal problema.
 &quot;Oggi non parliamo di cosa l'IA puo' fare in teoria. Parliamo di cosa serve
-perche' faccia davvero qualcosa di utile in pratica.&quot;</p>
+perche' faccia davvero qualcosa di utile in pratica.&quot;
+Usare l'epigrafe come cornice, senza appesantire: &quot;Parto da una frase che non
+viene dalla Silicon Valley ma da un'enciclica del 2026: la tecnica non e'
+neutrale, prende il volto di chi la progetta. Tenetela a mente — ci torno alla
+fine.&quot; Apre l'arco che si chiude alla slide 'Il volto della tecnica'.</p>
 </div>
 </div><div class="slide" data-num="02">
 <h2>Slide 2 — Il Problema</h2>
@@ -1066,7 +1075,53 @@ Il percorso da prompt a sistema produttivo e' esattamente quello che
 vi ho raccontato oggi.&quot;</p>
 </div>
 </div><div class="slide" data-num="19">
-<h2>Slide 19 — Call to Action</h2>
+<h2>Slide 19 — Il Volto della Tecnica</h2>
+<h3>Avere il dominio dell'architettura è poterla orientare — anche verso la persona</h3>
+<p><strong>Visual:</strong> Tre stadi — la tecnica non è neutrale → i tre cardini sono il volto
+che le diamo → orientata alla persona:</p>
+<pre><code>LA TECNICA              IL DOMINIO              ORIENTATA
+NON È NEUTRALE    →    DELL'ARCHITETTURA   →   ALLA PERSONA
+«assume il volto       · ARCHITETTURA          · Gate: il giudizio
+ di chi la pensa,      · DOMINIO                  umano resta centrale
+ la finanzia,          · STRATEGIA             · Dominio: responsabilità
+ la regola, la usa»                               codificata
+ §9                    = il volto che          · Strategia: l'uomo dove
+                         le diamo                 aggiunge giudizio
+</code></pre>
+<p><strong>Il punto:</strong></p>
+<ul>
+<li>L'enciclica <em>Magnifica Humanitas</em> (Leone XIV, 2026) ricorda che la tecnica
+«non e' neutrale, perche' assume il volto di chi la pensa, la finanzia, la
+regola, la usa» (§9)</li>
+<li>Se non e' neutrale, qualcuno le da' comunque un volto: i tre cardini —
+architettura, dominio, strategia — sono esattamente il volto che le diamo</li>
+<li>I decision gate tengono il <strong>giudizio umano</strong> al centro; il dominio codifica la
+<strong>responsabilita'</strong>; la strategia mette «l'uomo dove aggiunge giudizio» — il
+primato del lavoro umano «su ogni logica puramente produttiva o finanziaria» (§30)</li>
+<li>Non e' un vincolo etico calato dall'alto sulla tecnica: e' una conseguenza
+<strong>tecnologica</strong>. Solo chi ha il dominio dell'architettura puo' decidere «a
+quali fini orientarla» (§5). Senza quel dominio, l'orientamento lo decide
+qualcun altro — o nessuno</li>
+</ul>
+<p>
+<em>&quot;La tecnica non e' neutrale: prende il volto di chi la progetta. Avere il dominio
+dell'architettura e' poter scegliere che quel volto sia umano.&quot;</em></p>
+<p><div class="speaker-notes">
+&quot;Chiudo riannodando l'arco aperto all'inizio. Tutto quello che vi ho mostrato —
+agenti, skill, decision gate, uomo nel loop — non e' solo ingegneria
+dell'efficienza. E' la risposta tecnica a una domanda che l'enciclica pone in
+termini etici: la tecnica non e' neutrale, prende il volto di chi la progetta e
+la governa. La conseguenza non e' un appello buonista — e' molto concreta: se
+non siete voi ad avere il dominio dell'architettura, l'orientamento della
+tecnologia lo decide qualcun altro, o il caso. I tre cardini sono il modo in cui
+si tiene la persona al centro: i gate proteggono il giudizio umano, il dominio
+codifica la responsabilita', la strategia mette l'uomo dove aggiunge valore. Per
+questo l'architettura non e' un tema da informatici: e' la precondizione per
+orientare l'IA verso fini umani. Ed e' anche il motivo per cui questo lavoro non
+si delega in blocco a una black box.&quot; Pausa, poi passare alla call to action.</p>
+</div>
+</div><div class="slide" data-num="20">
+<h2>Slide 20 — Call to Action</h2>
 <h3>Smettete di chiedere all'IA di fare cose. Iniziate a costruire sistemi che sanno farle.</h3>
 <p><strong>Tre azioni concrete per lunedi' mattina:</strong></p>
 <ol>
@@ -1094,7 +1149,7 @@ approvazioni, non serve un team di data scientist. Servono 30 minuti
 per scrivere un workflow come skill, 15 minuti per mappare i decision gate,
 e la volonta' di misurare l'output, non l'attivita'. Grazie.&quot;</p>
 </div>
-</div><div class="section-divider">SLIDE BACKUP (se ci sono domande)</div><div class="slide" data-num="20">
+</div><div class="section-divider">SLIDE BACKUP (se ci sono domande)</div><div class="slide" data-num="21">
 <h2>Backup 1 — Esempio Live: Pipeline Credit Risk</h2>
 <h3>Dal bilancio al rating in 5 step</h3>
 <pre><code>STEP 1: Dataset            STEP 2: BMS settoriale
@@ -1118,7 +1173,7 @@ Debito endogeno             EL = 1.2M, UL 95% = 3.8M
 tre paper accademici in codice e skill. Il tempo totale: tre sessioni
 di lavoro collaborativo con l'IA. Non tre mesi — tre sessioni.&quot;</p>
 </div>
-</div><div class="slide" data-num="21">
+</div><div class="slide" data-num="22">
 <h2>Backup 2 — ROI dell'Approccio</h2>
 <h3>Investimento vs ritorno</h3>
 <table>

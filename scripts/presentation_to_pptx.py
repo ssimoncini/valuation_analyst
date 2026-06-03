@@ -142,6 +142,27 @@ def add_diagram(slide, prs, svg_str):
             Inches(0.45), Inches(1.18), Inches(9.1), Inches(4.05))
 
 
+def add_epigraph(slide, lines):
+    """Aggiunge un'epigrafe (citazione) in basso a sinistra sulla cover.
+
+    `lines` è una lista di (testo, italic): le righe italic sono la citazione,
+    quelle non-italic la fonte.
+    """
+    tb = slide.shapes.add_textbox(Inches(2.2), Inches(4.02), Inches(4.1), Inches(1.2))
+    tf = tb.text_frame
+    tf.word_wrap = True
+    first = True
+    for text, italic in lines:
+        p = tf.paragraphs[0] if first else tf.add_paragraph()
+        first = False
+        r = p.add_run()
+        r.text = text
+        r.font.name = "Montserrat"
+        r.font.italic = italic
+        r.font.size = Pt(10.5 if italic else 9.5)
+        r.font.color.rgb = RGBColor.from_string(C_MUTED if italic else C_BLUE_DARK)
+
+
 # --- Tabelle ----------------------------------------------------------------
 def _style_cell(cell, text, size, color, bold, fill, align=PP_ALIGN.LEFT):
     cell.fill.solid()
@@ -201,6 +222,12 @@ def build(prs):
              "Architettura, Dominio, Strategia\nCome trasformare un chatbot in un collega")
     set_text(s, "Text 3", "VALUATION ANALYST")
     set_text(s, "Text 4", "Caso reale · sistema multi-agente · 25 minuti")
+    # epigrafe di apertura — enciclica 'Magnifica Humanitas' (Leone XIV, 2026)
+    add_epigraph(s, [
+        ("«La tecnica non è neutrale: assume il volto", True),
+        ("di chi la pensa, la finanzia, la regola, la usa.»", True),
+        ("— Leone XIV, Magnifica Humanitas (2026), §9", False),
+    ])
 
     # 2 — IL PROBLEMA (content + piramide)
     s = clone_slide(prs, CONTENT)
@@ -370,7 +397,13 @@ def build(prs):
              "Non big bang, percorso. Partire da dove il rischio è basso e il "
              "valore visibile.\n\nSenza: pilota che non finisce mai.")
 
-    # 17 — CALL TO ACTION (value proposition)
+    # 17 — IL VOLTO DELLA TECNICA (content) — chiude in chiave umana
+    s = clone_slide(prs, CONTENT)
+    fit_title(s, "Text 0", "Il volto della tecnica: l'architettura orienta verso la persona")
+    remove(s, "Shape 3"); remove(s, "Text 4")
+    add_diagram(s, prs, D.human_centrality())
+
+    # 18 — CALL TO ACTION (value proposition)
     s = clone_slide(prs, VALUEPROP)
     fit_title(s, "Text 0", "Call to action: 3 mosse per lunedì mattina")
     set_text(s, "Text 4", "Costruite\nsistemi,\nnon prompt")
